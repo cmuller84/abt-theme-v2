@@ -19,7 +19,7 @@ $locations = array(
         'services' => array('Center-Based ABA', 'Home-Based ABA', 'Early Learning Centers'),
         'areas'    => 'Beachwood, Pepper Pike, Lyndhurst, South Euclid, University Heights, Shaker Heights, Cleveland Heights, and surrounding communities',
         'desc'     => 'Our Beachwood center is ABT\'s flagship location, offering a full range of ABA therapy services in a state-of-the-art facility. With dedicated therapy rooms, colorful play areas, a chalkboard wall, and collaborative spaces, Beachwood provides an ideal environment for children to learn and grow.',
-        'photos'   => array('reynoldsburg-wide-gym.jpg', 'ABA_Playroom_Beachwood_Center_for_Advanced_Behavioral_Therapy__.jpg', '20250313_083305.jpg', '20250313_083447.jpg', '20250313_083458.jpg', '20250313_083314.jpg', '20250313_083058.jpg', '20250313_083144.jpg', '20250313_083215.jpg', 'beachwood-therapy-room.jpg', 'beachwood-new-1.jpg', 'beachwood-new-2.jpg', 'advanced_behavioral_therapy_beachwood_1.jpg'),
+        'photos'   => array('ABA_Playroom_Beachwood_Center_for_Advanced_Behavioral_Therapy__.jpg', '20250313_083305.jpg', '20250313_083447.jpg', '20250313_083458.jpg', '20250313_083314.jpg', '20250313_083058.jpg', '20250313_083144.jpg', '20250313_083215.jpg', 'beachwood-therapy-room.jpg', 'beachwood-new-1.jpg', 'beachwood-new-2.jpg', 'advanced_behavioral_therapy_beachwood_1.jpg'),
         'badge'    => 'Flagship Center',
         'badge_color' => 'var(--primary-blue)',
         'map_embed'=> 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.8!2d-81.51!3d41.46!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDI3JzM2LjAiTiA4McKwMzAnMzYuMCJX!5e0!3m2!1sen!2sus!4v1',

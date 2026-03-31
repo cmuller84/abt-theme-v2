@@ -22,7 +22,6 @@
     <div class="top-bar-inner">
         <div class="top-bar-left">
             <span><?php echo wp_kses_post(get_option('abt_announcement', '&#127881; Now Open: Powell, Ohio Center!')); ?></span>
-            <a href="tel:<?php echo esc_attr(str_replace(array(' ', '-', '.', '(', ')'), '', get_option('abt_phone', '888-830-1672'))); ?>">&#128222; Call: <?php echo esc_html(get_option('abt_phone', '888-830-1672')); ?></a>
         </div>
         <div class="top-bar-right">
             <?php $email = get_option('abt_email', 'coordinations@advancedabatherapy.com'); ?>
