@@ -58,6 +58,14 @@ function abt_register_settings() {
     register_setting('abt_settings', 'abt_img_nj_hero');
     register_setting('abt_settings', 'abt_img_contact_hero');
 
+    // Location carousel photos (8 slots per location)
+    $loc_slugs = array('beachwood', 'powell', 'reynoldsburg', 'nj');
+    foreach ($loc_slugs as $ls) {
+        for ($i = 1; $i <= 8; $i++) {
+            register_setting('abt_settings', 'abt_img_' . $ls . '_photo_' . $i);
+        }
+    }
+
     // Canva video URL
     register_setting('abt_settings', 'abt_canva_video_url', array('default' => 'https://www.canva.com/design/DAG-VFwY7wc/fYw-27JBw2d3g9emYxxfzw/watch?embed'));
 
@@ -231,6 +239,34 @@ function abt_settings_html() {
                     </td>
                 </tr>
                 <?php endforeach; ?>
+
+                <tr><th colspan="2"><h2>Location Carousel Photos</h2><p class="description">Upload photos for each location's carousel slideshow. Leave blank to use the default theme images. Landscape (horizontal) photos look best. Photos display in order (1 first).</p></th></tr>
+                <?php
+                $carousel_locations = array(
+                    'beachwood' => 'Beachwood',
+                    'powell'    => 'Powell',
+                    'reynoldsburg' => 'Reynoldsburg',
+                    'nj'        => 'New Jersey',
+                );
+                foreach ($carousel_locations as $loc_key => $loc_name):
+                    echo '<tr><th colspan="2" style="padding-top:16px;"><h3 style="color:#1B4B8A;">' . esc_html($loc_name) . ' Carousel</h3></th></tr>';
+                    for ($ci = 1; $ci <= 8; $ci++):
+                        $ck = $loc_key . '_photo_' . $ci;
+                        $cv = get_option('abt_img_' . $ck);
+                        $cu = $cv ? wp_get_attachment_image_url($cv, 'thumbnail') : '';
+                ?>
+                <tr>
+                    <th><?php echo esc_html($loc_name); ?> Photo <?php echo $ci; ?></th>
+                    <td>
+                        <div class="abt-image-picker" data-field="abt_img_<?php echo esc_attr($ck); ?>">
+                            <input type="hidden" name="abt_img_<?php echo esc_attr($ck); ?>" value="<?php echo esc_attr($cv); ?>">
+                            <img src="<?php echo esc_url($cu); ?>" style="max-width:200px;max-height:120px;display:<?php echo $cu ? 'block' : 'none'; ?>;margin-bottom:8px;border-radius:8px;">
+                            <button type="button" class="button abt-choose-image">Choose Image</button>
+                            <button type="button" class="button abt-remove-image" style="display:<?php echo $cv ? 'inline-block' : 'none'; ?>">Remove</button>
+                        </div>
+                    </td>
+                </tr>
+                <?php endfor; endforeach; ?>
 
                 <tr><th colspan="2"><h2>Job Postings (Careers Page)</h2><p class="description">Manage the open positions shown on the Careers page. Each row = one position card. Add location-specific Apploi links separated by commas (format: <code>Label|URL, Label|URL</code>). Leave Title blank to hide a slot.</p></th></tr>
                 <tr><th>Apploi Profile URL</th><td><input type="url" name="abt_jobs_apploi_url" value="<?php echo esc_attr(get_option('abt_jobs_apploi_url', 'https://jobs.apploi.com/profile/advanced-behavioral-therapy')); ?>" class="large-text"><p class="description">"View All Open Positions" link at the bottom of the careers page.</p></td></tr>

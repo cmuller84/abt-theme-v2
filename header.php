@@ -24,7 +24,7 @@
             <span><?php echo wp_kses_post(get_option('abt_announcement', '&#127881; Now Open: Powell, Ohio Center!')); ?></span>
         </div>
         <div class="top-bar-center">
-            <span class="top-bar-bcba">&#10004; BCBA Owned &amp; Operated</span>
+            <span class="top-bar-bcba"><span class="bcba-check">&#10004;</span> BCBA Owned &amp; Operated</span>
         </div>
         <div class="top-bar-right">
             <?php $email = get_option('abt_email', 'coordinations@advancedabatherapy.com'); ?>

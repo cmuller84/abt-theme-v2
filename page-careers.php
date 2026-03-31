@@ -208,7 +208,7 @@ setInterval(function() { lifeNav(1); }, 5000);
 </section>
 
 <!-- Apply Now — Cognito Form -->
-<section id="apply" style="padding: 80px 0; background: var(--bg-cream);">
+<section id="apply" style="padding: 80px 0; background-image: url('<?php echo esc_url($pattern); ?>'); background-size: cover; background-position: center;">
     <div style="max-width: 800px; margin: 0 auto; padding: 0 24px;">
         <div class="section-header">
             <h2>Apply Now</h2>

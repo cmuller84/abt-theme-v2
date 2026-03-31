@@ -113,44 +113,56 @@ $loc = isset($locations[$slug]) ? $locations[$slug] : $locations['beachwood-ohio
         <!-- Photo Carousel -->
         <div>
             <?php
-            // Check if admin has set a custom hero photo for this location
-            $hero_key_map = array(
-                'beachwood-ohio' => 'beachwood_hero',
-                'powell-ohio' => 'powell_hero',
-                'reynoldsburg-ohio' => 'reynoldsburg_hero',
-                'new-jersey' => 'nj_hero',
+            // Check if admin has uploaded carousel photos for this location
+            $loc_key_map = array(
+                'beachwood-ohio' => 'beachwood',
+                'powell-ohio' => 'powell',
+                'reynoldsburg-ohio' => 'reynoldsburg',
+                'new-jersey' => 'nj',
             );
-            $hero_key = isset($hero_key_map[$slug]) ? $hero_key_map[$slug] : '';
-            $custom_hero = $hero_key ? get_option('abt_img_' . $hero_key) : '';
-            if ($custom_hero) {
-                $custom_url = wp_get_attachment_image_url($custom_hero, 'large');
-                if ($custom_url) {
-                    // Replace first photo with admin-selected one
-                    array_unshift($loc['photos'], '__custom__');
+            $loc_admin_key = isset($loc_key_map[$slug]) ? $loc_key_map[$slug] : '';
+
+            // Build photo URLs: use admin uploads if any exist, otherwise fall back to hardcoded
+            $carousel_urls = array();
+            if ($loc_admin_key) {
+                for ($pi = 1; $pi <= 8; $pi++) {
+                    $pid = get_option('abt_img_' . $loc_admin_key . '_photo_' . $pi);
+                    if ($pid) {
+                        $purl = wp_get_attachment_image_url($pid, 'large');
+                        if ($purl) $carousel_urls[] = $purl;
+                    }
+                }
+            }
+            // If no admin photos uploaded, use theme defaults
+            if (empty($carousel_urls) && !empty($loc['photos'])) {
+                // Check for hero override (old behavior)
+                $hero_key_map = array('beachwood-ohio' => 'beachwood_hero', 'powell-ohio' => 'powell_hero', 'reynoldsburg-ohio' => 'reynoldsburg_hero', 'new-jersey' => 'nj_hero');
+                $hero_key = isset($hero_key_map[$slug]) ? $hero_key_map[$slug] : '';
+                $custom_hero = $hero_key ? get_option('abt_img_' . $hero_key) : '';
+                if ($custom_hero) {
+                    $custom_url = wp_get_attachment_image_url($custom_hero, 'large');
+                    if ($custom_url) $carousel_urls[] = $custom_url;
+                }
+                foreach ($loc['photos'] as $photo) {
+                    $carousel_urls[] = $img . $photo;
                 }
             }
             ?>
-            <?php if (!empty($loc['photos']) && count($loc['photos']) > 1): ?>
+            <?php if (count($carousel_urls) > 1): ?>
                 <div class="photo-carousel" id="heroCarousel">
-                    <?php foreach ($loc['photos'] as $i => $photo):
-                        if ($photo === '__custom__') {
-                            $src = $custom_url;
-                        } else {
-                            $src = $img . $photo;
-                        }
-                    ?>
+                    <?php foreach ($carousel_urls as $i => $src): ?>
                     <img src="<?php echo esc_url($src); ?>" alt="<?php echo esc_attr($loc['name']); ?>" class="<?php echo $i === 0 ? 'active' : ''; ?>" onclick="openLightbox(this.src, this.alt)">
                     <?php endforeach; ?>
                     <button class="carousel-btn prev" onclick="carouselNav(-1)" aria-label="Previous">&#8249;</button>
                     <button class="carousel-btn next" onclick="carouselNav(1)" aria-label="Next">&#8250;</button>
                 </div>
                 <div class="carousel-dots" id="carouselDots">
-                    <?php foreach ($loc['photos'] as $i => $photo): ?>
+                    <?php foreach ($carousel_urls as $i => $src): ?>
                     <button class="carousel-dot <?php echo $i === 0 ? 'active' : ''; ?>" onclick="carouselGo(<?php echo $i; ?>)" aria-label="Photo <?php echo $i+1; ?>"></button>
                     <?php endforeach; ?>
                 </div>
-            <?php elseif (!empty($loc['photos'])): ?>
-                <img src="<?php echo esc_url($img . $loc['photos'][0]); ?>" alt="<?php echo esc_attr($loc['name']); ?>" style="width: 100%; border-radius: 24px; box-shadow: 0 16px 40px rgba(27,75,138,0.15);">
+            <?php elseif (count($carousel_urls) === 1): ?>
+                <img src="<?php echo esc_url($carousel_urls[0]); ?>" alt="<?php echo esc_attr($loc['name']); ?>" style="width: 100%; border-radius: 24px; box-shadow: 0 16px 40px rgba(27,75,138,0.15);">
             <?php else: ?>
                 <div style="background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark)); border-radius: 24px; padding: 60px 40px; text-align: center; color: #fff;">
                     <div style="font-size: 28px; margin-bottom: 16px;">&#127968;</div>
