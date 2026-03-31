@@ -90,6 +90,8 @@ function submitNewsletter(e) {
                 <a href="<?php echo esc_url(home_url('/hipaa-notice/')); ?>">HIPAA Notice</a>
                 <span class="footer-sep">&bull;</span>
                 <a href="<?php echo esc_url(home_url('/accessibility/')); ?>">Accessibility</a>
+                <span class="footer-sep">&bull;</span>
+                <a href="<?php echo esc_url(home_url('/non-discrimination/')); ?>">Non-Discrimination</a>
             </span>
         </div>
     </div>
@@ -113,6 +115,38 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+<!-- Cookie Consent Banner -->
+<div id="abt-cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:rgba(26,26,46,0.97); color:#fff; z-index:99998; padding:0; box-shadow:0 -4px 20px rgba(0,0,0,0.2); backdrop-filter:blur(8px);">
+    <div style="max-width:1200px; margin:0 auto; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:280px;">
+            <p style="font-size:15px; line-height:1.6; margin:0; color:rgba(255,255,255,0.9);">We use cookies and similar technologies to improve your experience, analyze site traffic, and support our marketing efforts. By continuing to use this site, you consent to our use of cookies. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>" style="color:var(--accent-yellow); text-decoration:underline; font-weight:600;">Privacy Policy</a></p>
+        </div>
+        <div style="display:flex; gap:10px; flex-shrink:0;">
+            <button onclick="abtAcceptCookies()" style="background:var(--accent-yellow); color:var(--text-dark); border:none; padding:12px 28px; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:all 0.2s;">Accept All</button>
+            <button onclick="abtDeclineCookies()" style="background:transparent; color:rgba(255,255,255,0.7); border:1px solid rgba(255,255,255,0.3); padding:12px 20px; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s;">Decline</button>
+        </div>
+    </div>
+</div>
+<script>
+(function(){
+    if (!localStorage.getItem('abt_cookie_consent')) {
+        document.getElementById('abt-cookie-banner').style.display = 'block';
+    }
+})();
+function abtAcceptCookies() {
+    localStorage.setItem('abt_cookie_consent', 'accepted');
+    document.getElementById('abt-cookie-banner').style.display = 'none';
+}
+function abtDeclineCookies() {
+    localStorage.setItem('abt_cookie_consent', 'declined');
+    document.getElementById('abt-cookie-banner').style.display = 'none';
+    // If GTM is loaded and user declines, push opt-out event
+    if (typeof dataLayer !== 'undefined') {
+        dataLayer.push({'event': 'cookie_consent_declined'});
+    }
+}
 </script>
 
 <?php wp_footer(); ?>
