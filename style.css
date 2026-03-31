@@ -1096,6 +1096,13 @@ a {
 }
 
 /* ============================================
+   IMAGE ENHANCEMENT — brightens dark/dull photos
+   ============================================ */
+.img-enhance {
+    filter: brightness(1.08) saturate(1.15) contrast(1.03);
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
@@ -1379,6 +1386,7 @@ section img[onclick*="openLightbox"] {
     left: 0;
     border-radius: 24px;
     background: #2a2a2a;
+    filter: brightness(1.08) saturate(1.15) contrast(1.03);
 }
 .photo-carousel img.active {
     display: block;

@@ -51,14 +51,14 @@ $pattern = $img . 'abt-pattern-light.jpg';
             <p style="font-size: 18px; color: var(--text-medium); line-height: 1.9; margin-bottom: 24px;">Our therapists collaborate with daycare staff to embed behavioral strategies throughout the day, supporting your child's development during critical early years.</p>
             <p style="font-size: 18px; color: var(--text-dark); font-weight: 600;">Ages 2-6 &bull; Available in Ohio</p>
         </div>
-        <div><img src="<?php echo esc_url($img . 'powell-art-room.jpg'); ?>" alt="ABT early learning — art room with kids tables" style="width: 100%; border-radius: 24px; box-shadow: 0 16px 40px rgba(27,75,138,0.15);"></div>
+        <div><img src="<?php echo esc_url($img . 'powell-art-room.jpg'); ?>" alt="ABT early learning — art room with kids tables" class="img-enhance" style="width: 100%; border-radius: 24px; box-shadow: 0 16px 40px rgba(27,75,138,0.15);"></div>
     </div>
 </section>
 
 <!-- School Support -->
 <section id="school" style="padding: 80px 0; background: var(--bg-cream);">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-        <div><img src="<?php echo esc_url($img . 'powell-reading-nook.jpg'); ?>" alt="ABT reading nook with stuffed animals and alphabet poster" style="width: 100%; border-radius: 24px; box-shadow: 0 16px 40px rgba(27,75,138,0.15);"></div>
+        <div><img src="<?php echo esc_url($img . 'powell-reading-nook.jpg'); ?>" alt="ABT reading nook with stuffed animals and alphabet poster" class="img-enhance" style="width: 100%; border-radius: 24px; box-shadow: 0 16px 40px rgba(27,75,138,0.15);"></div>
         <div>
             <span style="display: inline-block; background: var(--accent-yellow); color: var(--text-dark); font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">School Support</span>
             <h2 style="font-size: 34px; color: var(--accent-red); margin-bottom: 16px;">School-Based Support</h2>

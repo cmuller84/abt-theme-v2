@@ -94,11 +94,8 @@ setInterval(function() { lifeNav(1); }, 5000);
     </div>
 </section>
 
-<!-- Open Positions + Apply Now — single pattern background -->
-<div style="background-image: url('<?php echo esc_url($pattern); ?>'); background-size: cover; background-position: center;">
-
 <!-- Open Positions -->
-<section style="padding: 80px 0 40px;">
+<section style="padding: 80px 0; background: var(--white);">
     <div style="max-width: 1000px; margin: 0 auto; padding: 0 24px;">
         <div class="section-header">
             <h2>Open Positions</h2>
@@ -211,7 +208,7 @@ setInterval(function() { lifeNav(1); }, 5000);
 </section>
 
 <!-- Apply Now — Cognito Form -->
-<section id="apply" style="padding: 40px 0 80px;">
+<section id="apply" style="padding: 80px 0; background-image: url('<?php echo esc_url($pattern); ?>'); background-size: cover; background-position: center;">
     <div style="max-width: 800px; margin: 0 auto; padding: 0 24px;">
         <div class="section-header">
             <h2>Apply Now</h2>
@@ -222,8 +219,6 @@ setInterval(function() { lifeNav(1); }, 5000);
         </div>
     </div>
 </section>
-
-</div><!-- end pattern wrapper -->
 
 <!-- BCBA Mentorship -->
 <section id="mentorship" style="padding: 60px 0; background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark)); text-align: center;">
