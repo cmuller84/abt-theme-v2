@@ -16,7 +16,7 @@ get_header();
         <p style="font-size: 15px; color: var(--text-light); margin-bottom: 32px;"><strong>Last Updated:</strong> March 31, 2026</p>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">Our Commitment</h2>
-        <p style="font-size: 17px; margin-bottom: 28px;">Advanced Behavioral Therapy, LLC ("ABT") is committed to ensuring that our website is accessible to all individuals, including those with disabilities. We strive to provide an inclusive digital experience and are continuously working to improve the accessibility and usability of our website in conformance with the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA.</p>
+        <p style="font-size: 17px; margin-bottom: 28px;">Advanced Behavioral Therapy, S Corp ("ABT") is committed to ensuring that our website is accessible to all individuals, including those with disabilities. We strive to provide an inclusive digital experience and are continuously working to improve the accessibility and usability of our website in conformance with the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA.</p>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">Accessibility Features</h2>
         <p style="font-size: 17px; margin-bottom: 12px;">We have taken the following steps to ensure accessibility on our website:</p>
@@ -42,7 +42,7 @@ get_header();
         <p style="font-size: 17px; margin-bottom: 28px;">We welcome your feedback on the accessibility of our website. If you encounter any accessibility barriers or have suggestions for improvement, please contact us:</p>
 
         <div style="background: var(--bg-light); border-radius: 16px; padding: 28px; margin-bottom: 28px;">
-            <p style="font-size: 17px; margin-bottom: 8px;"><strong>Advanced Behavioral Therapy, LLC</strong></p>
+            <p style="font-size: 17px; margin-bottom: 8px;"><strong>Advanced Behavioral Therapy, S Corp</strong></p>
             <p style="font-size: 17px; margin-bottom: 8px;">Email: <a href="mailto:coordinations@advancedabatherapy.com" style="color: var(--primary-blue); font-weight: 600;">coordinations@advancedabatherapy.com</a></p>
             <p style="font-size: 17px; margin-bottom: 8px;">Phone: <a href="tel:8888301672" style="color: var(--primary-blue); font-weight: 600;">888-830-1672</a></p>
             <p style="font-size: 17px; margin-bottom: 0;">We aim to respond to accessibility feedback within 5 business days.</p>

@@ -160,7 +160,7 @@ setInterval(function() { lifeNav(1); }, 5000);
         ?>
 
         <!-- Ohio Positions -->
-        <h3 style="font-size: 32px; color: var(--primary-blue); margin-bottom: 20px; font-weight: 800; letter-spacing: -0.01em; border-bottom: 3px solid var(--accent-yellow); padding-bottom: 10px; display: inline-block;">&#127466;&#127480; Ohio</h3>
+        <h3 style="font-size: 32px; color: var(--primary-blue); margin-bottom: 20px; font-weight: 800; letter-spacing: -0.01em; border-bottom: 3px solid var(--accent-yellow); padding-bottom: 10px; display: inline-block;">Ohio</h3>
         <?php foreach ($oh_positions as $pos): ?>
         <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
@@ -181,7 +181,7 @@ setInterval(function() { lifeNav(1); }, 5000);
         <?php endforeach; ?>
 
         <!-- NJ Positions -->
-        <h3 style="font-size: 32px; color: var(--primary-blue); margin-top: 48px; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.01em; border-bottom: 3px solid var(--accent-yellow); padding-bottom: 10px; display: inline-block;">&#127466;&#127480; New Jersey</h3>
+        <h3 style="font-size: 32px; color: var(--primary-blue); margin-top: 48px; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.01em; border-bottom: 3px solid var(--accent-yellow); padding-bottom: 10px; display: inline-block;">New Jersey</h3>
         <?php foreach ($nj_positions as $pos): ?>
         <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">

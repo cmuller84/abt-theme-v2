@@ -20,7 +20,7 @@ get_header();
         <p style="font-size: 15px; color: var(--text-light); margin-bottom: 32px;"><strong>Effective Date:</strong> March 31, 2026</p>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">Our Commitment to Your Privacy</h2>
-        <p style="font-size: 17px; margin-bottom: 28px;">Advanced Behavioral Therapy, LLC ("ABT") is committed to protecting the privacy of your health information. This Notice of Privacy Practices ("Notice") describes how we may use and disclose your Protected Health Information ("PHI") and your rights regarding that information. PHI is information about you — including demographic information — that may identify you and relates to your past, present, or future physical or mental health condition, the provision of healthcare to you, or payment for that care.</p>
+        <p style="font-size: 17px; margin-bottom: 28px;">Advanced Behavioral Therapy, S Corp ("ABT") is committed to protecting the privacy of your health information. This Notice of Privacy Practices ("Notice") describes how we may use and disclose your Protected Health Information ("PHI") and your rights regarding that information. PHI is information about you — including demographic information — that may identify you and relates to your past, present, or future physical or mental health condition, the provision of healthcare to you, or payment for that care.</p>
         <p style="font-size: 17px; margin-bottom: 28px;">We are required by the Health Insurance Portability and Accountability Act of 1996 ("HIPAA") and its implementing regulations to maintain the privacy of your PHI, provide you with this Notice of our legal duties and privacy practices, and abide by the terms of the Notice currently in effect.</p>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">How We May Use and Disclose Your PHI</h2>
@@ -48,12 +48,12 @@ get_header();
         </ul>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">Uses and Disclosures Requiring Your Authorization</h2>
-        <p style="font-size: 17px; margin-bottom: 28px;">Other uses and disclosures of your PHI not described in this Notice will be made only with your written authorization. You may revoke your authorization at any time by submitting a written request to our Privacy Officer. Revocation will not affect any disclosures already made in reliance on your prior authorization. We will not use or disclose your PHI for marketing purposes or sell your PHI without your express written authorization.</p>
+        <p style="font-size: 17px; margin-bottom: 28px;">Other uses and disclosures of your PHI not described in this Notice will be made only with your written authorization. You may revoke your authorization at any time by submitting a written request to our office. Revocation will not affect any disclosures already made in reliance on your prior authorization. We will not use or disclose your PHI for marketing purposes or sell your PHI without your express written authorization.</p>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">Your Rights Regarding Your PHI</h2>
 
         <h3 style="font-size: 22px; color: var(--text-dark); margin-bottom: 12px;">Right to Access</h3>
-        <p style="font-size: 17px; margin-bottom: 20px;">You have the right to inspect and obtain a copy of your PHI maintained by ABT. To request access, submit a written request to our Privacy Officer. We may charge a reasonable fee for copying and mailing costs.</p>
+        <p style="font-size: 17px; margin-bottom: 20px;">You have the right to inspect and obtain a copy of your PHI maintained by ABT. To request access, submit a written request to our office. We may charge a reasonable fee for copying and mailing costs.</p>
 
         <h3 style="font-size: 22px; color: var(--text-dark); margin-bottom: 12px;">Right to Request Amendments</h3>
         <p style="font-size: 17px; margin-bottom: 20px;">You have the right to request that we amend your PHI if you believe it is inaccurate or incomplete. Submit your request in writing with a reason for the amendment. We may deny your request in certain circumstances as permitted by law.</p>
@@ -68,7 +68,7 @@ get_header();
         <p style="font-size: 17px; margin-bottom: 20px;">You may request that we communicate with you about your PHI by alternative means or at alternative locations (e.g., sending correspondence to a different address). We will accommodate reasonable requests.</p>
 
         <h3 style="font-size: 22px; color: var(--text-dark); margin-bottom: 12px;">Right to a Copy of This Notice</h3>
-        <p style="font-size: 17px; margin-bottom: 28px;">You have the right to obtain a paper copy of this Notice at any time, even if you have previously agreed to receive it electronically. Contact our Privacy Officer to request a copy.</p>
+        <p style="font-size: 17px; margin-bottom: 28px;">You have the right to obtain a paper copy of this Notice at any time, even if you have previously agreed to receive it electronically. Contact our office to request a copy.</p>
 
         <h2 style="font-size: 28px; color: var(--primary-blue); margin-bottom: 16px;">Breach Notification</h2>
         <p style="font-size: 17px; margin-bottom: 28px;">In the event of a breach of your unsecured PHI, we will notify you as required by law. Notification will be made without unreasonable delay and no later than 60 days from the discovery of the breach.</p>
@@ -81,7 +81,7 @@ get_header();
 
         <div style="background: var(--bg-light); border-radius: 16px; padding: 28px; margin-bottom: 20px;">
             <p style="font-size: 17px; margin-bottom: 12px;"><strong>File a complaint with ABT:</strong></p>
-            <p style="font-size: 17px; margin-bottom: 8px;">Advanced Behavioral Therapy, LLC — Privacy Officer</p>
+            <p style="font-size: 17px; margin-bottom: 8px;">Advanced Behavioral Therapy</p>
             <p style="font-size: 17px; margin-bottom: 8px;">Email: <a href="mailto:coordinations@advancedabatherapy.com" style="color: var(--primary-blue); font-weight: 600;">coordinations@advancedabatherapy.com</a></p>
             <p style="font-size: 17px; margin-bottom: 0;">Phone: <a href="tel:8888301672" style="color: var(--primary-blue); font-weight: 600;">888-830-1672</a></p>
         </div>
