@@ -84,7 +84,7 @@ setInterval(function() { lifeNav(1); }, 5000);
 </script>
 
 <!-- Video: Day in the Life -->
-<section style="padding: 80px 0; background: var(--bg-cream);">
+<section style="padding: 80px 0; background: var(--bg-blue-tint);">
     <div style="max-width: 900px; margin: 0 auto; padding: 0 24px; text-align: center;">
         <h2 style="font-size: 36px; color: var(--accent-red); margin-bottom: 12px;">A Day in the Life of an RBT</h2>
         <p style="font-size: 20px; color: var(--text-medium); margin-bottom: 36px;">See what it's like to be part of the ABT team.</p>
@@ -208,7 +208,7 @@ setInterval(function() { lifeNav(1); }, 5000);
 </section>
 
 <!-- Apply Now — Cognito Form -->
-<section id="apply" style="padding: 80px 0; background-image: url('<?php echo esc_url($pattern); ?>'); background-size: cover; background-position: center;">
+<section id="apply" style="padding: 80px 0; background: var(--bg-blue-tint);">
     <div style="max-width: 800px; margin: 0 auto; padding: 0 24px;">
         <div class="section-header">
             <h2>Apply Now</h2>
