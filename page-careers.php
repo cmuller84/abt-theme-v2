@@ -27,7 +27,7 @@ $pattern = $img . 'abt-pattern-light.jpg';
             <div style="background: var(--white); border-radius: 20px; padding: 32px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='transparent';this.style.transform=''">
                 <div style="font-size: 20px; margin-bottom: 16px;">&#128176;</div>
                 <h3 style="font-size: 19px; color: var(--text-dark); margin-bottom: 8px; font-family: 'DM Sans', sans-serif; font-weight: 700;">Competitive Pay</h3>
-                <p style="font-size: 16px; color: var(--text-medium); line-height: 1.7;">RBTs: $20-$25/hr. BCBAs: $70K-$100K/yr. Plus performance-based wage adjustments every 6 months.</p>
+                <p style="font-size: 16px; color: var(--text-medium); line-height: 1.7;">RBTs: $19-$24/hr (OH) / $24-$30/hr (NJ). BCBAs: $75K-$110K/yr. Plus performance-based raises every 6 months.</p>
             </div>
             <div style="background: var(--white); border-radius: 20px; padding: 32px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='transparent';this.style.transform=''">
                 <div style="font-size: 20px; margin-bottom: 16px;">&#127758;</div>
@@ -101,24 +101,89 @@ setInterval(function() { lifeNav(1); }, 5000);
             <h2>Open Positions</h2>
             <p>We're growing across Ohio and New Jersey. Find your next role.</p>
         </div>
+
+        <!-- Ohio Positions -->
+        <h3 style="font-size: 22px; color: var(--primary-blue); margin-bottom: 16px;">Ohio</h3>
         <?php
-        $positions = array(
-            array('title' => 'RBT &mdash; Beachwood Center', 'type' => 'Full-Time / Part-Time', 'pay' => '$20-$25/hr', 'loc' => 'Beachwood, OH'),
-            array('title' => 'RBT &mdash; Powell Center', 'type' => 'Full-Time / Part-Time', 'pay' => '$20-$25/hr', 'loc' => 'Powell, OH'),
-            array('title' => 'RBT &mdash; Reynoldsburg Center', 'type' => 'Full-Time / Part-Time', 'pay' => '$20-$25/hr', 'loc' => 'Reynoldsburg, OH'),
-            array('title' => 'RBT &mdash; In-Home (Ohio)', 'type' => 'Full-Time / Part-Time', 'pay' => '$20-$25/hr', 'loc' => 'Columbus Area, OH'),
-            array('title' => 'BCBA &mdash; Center &amp; Home-Based', 'type' => 'Full-Time', 'pay' => '$70K-$100K/yr', 'loc' => 'Ohio'),
-            array('title' => 'BCBA &mdash; Beachwood', 'type' => 'Full-Time', 'pay' => '$70K-$100K/yr', 'loc' => 'Beachwood, OH'),
+        $oh_positions = array(
+            array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$17-$19/hr', 'loc' => 'Multiple OH Locations', 'note' => 'No certification required &mdash; free RBT training provided, raise upon certification', 'links' => array(
+                array('label' => 'Powell', 'url' => 'https://jobs.apploi.com/view/1729206'),
+                array('label' => 'Reynoldsburg', 'url' => 'https://jobs.apploi.com/view/1729217'),
+                array('label' => 'South Euclid', 'url' => 'https://jobs.apploi.com/view/1745563'),
+                array('label' => 'Parma Heights', 'url' => 'https://jobs.apploi.com/view/1745568'),
+                array('label' => 'Grove City', 'url' => 'https://jobs.apploi.com/view/1745571'),
+                array('label' => 'Akron', 'url' => 'https://jobs.apploi.com/view/1745680'),
+            )),
+            array('title' => 'Registered Behavior Technician (RBT)', 'type' => 'Full-Time / Part-Time', 'pay' => '$19-$24/hr', 'loc' => 'Beachwood, OH', 'note' => 'Performance-based raises every 6 months', 'links' => array(
+                array('label' => 'Apply', 'url' => 'https://jobs.apploi.com/view/1729523'),
+            )),
+            array('title' => 'BCBA &mdash; Center-Based', 'type' => 'Full-Time', 'pay' => '$82K-$90K/yr', 'loc' => 'Beachwood, OH', 'note' => '', 'links' => array(
+                array('label' => 'Apply', 'url' => 'https://jobs.apploi.com/view/1718531'),
+            )),
+            array('title' => 'BCBA &mdash; Hybrid / Home-Based', 'type' => 'Full-Time', 'pay' => '$75K-$110K/yr', 'loc' => 'Ohio', 'note' => '$65-$72/hr billable + $25/hr non-billable', 'links' => array(
+                array('label' => 'South Euclid', 'url' => 'https://jobs.apploi.com/view/1732059'),
+                array('label' => 'Grove City', 'url' => 'https://jobs.apploi.com/view/1745574'),
+                array('label' => 'Remote', 'url' => 'https://jobs.apploi.com/view/1741753'),
+            )),
+            array('title' => 'Lead BCBA', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'Columbus, OH', 'note' => '', 'links' => array(
+                array('label' => 'Apply', 'url' => 'https://jobs.apploi.com/view/1736739'),
+            )),
         );
-        foreach ($positions as $pos): ?>
-        <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s; flex-wrap: wrap; gap: 12px;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
-            <div>
-                <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo $pos['title']; ?></h4>
-                <p style="font-size: 16px; color: var(--text-medium);"><?php echo esc_html($pos['loc']); ?> &bull; <?php echo esc_html($pos['type']); ?> &bull; <?php echo esc_html($pos['pay']); ?></p>
+        foreach ($oh_positions as $pos): ?>
+        <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo $pos['title']; ?></h4>
+                    <p style="font-size: 16px; color: var(--text-medium); margin-bottom: 0;"><?php echo esc_html($pos['loc']); ?> &bull; <?php echo esc_html($pos['type']); ?> &bull; <?php echo esc_html($pos['pay']); ?></p>
+                    <?php if ($pos['note']): ?>
+                    <p style="font-size: 14px; color: var(--primary-blue); margin-top: 4px; margin-bottom: 0;"><?php echo $pos['note']; ?></p>
+                    <?php endif; ?>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <?php foreach ($pos['links'] as $link): ?>
+                    <a href="<?php echo esc_url($link['url']); ?>" target="_blank" rel="noopener" class="btn-cta" style="padding: 10px 20px; font-size: 15px;"><?php echo esc_html($link['label']); ?> &rarr;</a>
+                    <?php endforeach; ?>
+                </div>
             </div>
-            <a href="https://www.indeed.com/cmp/Advanced-Behavioral-Therapy/jobs" target="_blank" rel="noopener" class="btn-cta" style="padding: 10px 24px; font-size: 16px;">Apply on Indeed &rarr;</a>
         </div>
         <?php endforeach; ?>
+
+        <!-- NJ Positions -->
+        <h3 style="font-size: 22px; color: var(--primary-blue); margin-top: 40px; margin-bottom: 16px;">New Jersey</h3>
+        <?php
+        $nj_positions = array(
+            array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$24-$30/hr', 'loc' => 'Multiple NJ Locations', 'note' => 'No certification required &mdash; free RBT training provided', 'links' => array(
+                array('label' => 'Fair Lawn', 'url' => 'https://jobs.apploi.com/view/1736706'),
+                array('label' => 'Berkeley Twp', 'url' => 'https://jobs.apploi.com/view/1736709'),
+                array('label' => 'Stafford Twp', 'url' => 'https://jobs.apploi.com/view/1736713'),
+            )),
+            array('title' => 'BCBA &mdash; Hybrid', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'New Jersey', 'note' => '', 'links' => array(
+                array('label' => 'Plainfield', 'url' => 'https://jobs.apploi.com/view/1745575'),
+                array('label' => 'Trenton', 'url' => 'https://jobs.apploi.com/view/1745569'),
+            )),
+        );
+        foreach ($nj_positions as $pos): ?>
+        <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo $pos['title']; ?></h4>
+                    <p style="font-size: 16px; color: var(--text-medium); margin-bottom: 0;"><?php echo esc_html($pos['loc']); ?> &bull; <?php echo esc_html($pos['type']); ?> &bull; <?php echo esc_html($pos['pay']); ?></p>
+                    <?php if ($pos['note']): ?>
+                    <p style="font-size: 14px; color: var(--primary-blue); margin-top: 4px; margin-bottom: 0;"><?php echo $pos['note']; ?></p>
+                    <?php endif; ?>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <?php foreach ($pos['links'] as $link): ?>
+                    <a href="<?php echo esc_url($link['url']); ?>" target="_blank" rel="noopener" class="btn-cta" style="padding: 10px 20px; font-size: 15px;"><?php echo esc_html($link['label']); ?> &rarr;</a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+
+        <div style="text-align: center; margin-top: 32px;">
+            <a href="https://jobs.apploi.com/profile/advanced-behavioral-therapy" target="_blank" rel="noopener" style="font-size: 18px; color: var(--primary-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px;">View All Open Positions on Apploi &rarr;</a>
+        </div>
     </div>
 </section>
 
