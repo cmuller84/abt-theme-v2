@@ -221,7 +221,7 @@ setInterval(function() { lifeNav(1); }, 5000);
 </section>
 
 <!-- BCBA Mentorship -->
-<section style="padding: 60px 0; background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark)); text-align: center;">
+<section id="mentorship" style="padding: 60px 0; background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark)); text-align: center;">
     <div style="max-width: 800px; margin: 0 auto; padding: 0 24px;">
         <h2 style="font-size: 28px; color: #fff; margin-bottom: 12px;">Free BCBA Mentorship Program</h2>
         <p style="font-size: 17px; color: rgba(255,255,255,0.85); margin-bottom: 8px; line-height: 1.8;">After 90 days of employment and enrollment in an ABAI-accredited program, you're eligible for free restricted and unrestricted supervision hours. We prepare you not just for the exam &mdash; but to become a well-rounded clinician with fieldwork across home, center, and school settings.</p>

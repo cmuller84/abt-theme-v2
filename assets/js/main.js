@@ -71,9 +71,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'source': 'ABT Website Contact Form'
             };
 
-            var webhookUrl = (typeof abtAjax !== 'undefined' && abtAjax.url)
-                ? abtAjax.url + '?action=abt_form_submit'
-                : 'https://squarecloud.app.n8n.cloud/webhook/e6115635-192d-4416-a2ee-7d3e9106fe6f';
+            var webhookUrl = (typeof abtSettings !== 'undefined' && abtSettings.ajaxUrl)
+                ? abtSettings.ajaxUrl + '?action=abt_form_submit'
+                : '/wp-admin/admin-ajax.php?action=abt_form_submit';
+
+            data['_nonce'] = (typeof abtSettings !== 'undefined') ? abtSettings.nonce : '';
 
             fetch(webhookUrl, {
                 method: 'POST',
@@ -81,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(data)
             })
             .then(function(res) {
+                if (!res.ok) throw new Error('Server error ' + res.status);
                 if (status) {
                     status.textContent = 'Thank you! We\'ll be in touch soon.';
                     status.className = 'form-status success';

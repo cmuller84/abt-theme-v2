@@ -30,11 +30,13 @@ function submitNewsletter(e) {
     var email = form.querySelector('input[name="email"]').value;
     status.textContent = 'Subscribing...';
     status.className = 'newsletter-status show';
-    fetch((typeof abtAjax !== 'undefined' ? abtAjax.url : '/wp-admin/admin-ajax.php') + '?action=abt_form_submit', {
+    var nonce = (typeof abtSettings !== 'undefined') ? abtSettings.nonce : '';
+    fetch((typeof abtSettings !== 'undefined' && abtSettings.ajaxUrl ? abtSettings.ajaxUrl : '/wp-admin/admin-ajax.php') + '?action=abt_form_submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, source: 'newsletter', name: 'Newsletter Subscriber' })
+        body: JSON.stringify({ email: email, source: 'newsletter', _nonce: nonce })
     }).then(function(r) {
+        if (!r.ok) throw new Error('Server error ' + r.status);
         status.textContent = 'You\'re subscribed! Thank you.';
         form.querySelector('input[name="email"]').value = '';
     }).catch(function() {

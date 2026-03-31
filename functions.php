@@ -52,6 +52,7 @@ function abt_enqueue() {
     wp_localize_script('abt-main-js', 'abtSettings', array(
         'webhookUrl' => get_option('abt_webhook_url', 'https://squarecloud.app.n8n.cloud/webhook/e6115635-192d-4416-a2ee-7d3e9106fe6f'),
         'ajaxUrl'    => admin_url('admin-ajax.php'),
+        'nonce'      => wp_create_nonce('abt_form_nonce'),
     ));
 }
 add_action('wp_enqueue_scripts', 'abt_enqueue');
@@ -135,6 +136,12 @@ add_action('admin_init', 'abt_register_ac_settings');
 /** AJAX handler: receives form, sends to n8n + ActiveCampaign */
 function abt_form_submit() {
     $data = json_decode(file_get_contents('php://input'), true);
+
+    // Verify nonce to prevent CSRF
+    $nonce = isset($data['_nonce']) ? $data['_nonce'] : '';
+    if (!wp_verify_nonce($nonce, 'abt_form_nonce')) {
+        wp_send_json_error('Security check failed. Please refresh the page and try again.', 403);
+    }
 
     // Normalize email field — JS sends 'Email' or 'email' depending on form
     $email = '';
