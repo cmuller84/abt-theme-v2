@@ -143,7 +143,7 @@ $pattern = $img . 'abt-pattern-light.jpg';
             <img src="<?php echo esc_url($img . 'cigna_lightgray.png'); ?>" alt="Cigna" class="insurance-logo-lg">
             <img src="<?php echo esc_url($img . 'buckeye_lightgray.png'); ?>" alt="Buckeye Health Plan" class="insurance-logo-lg">
         </div>
-        <p style="font-size: 18px; color: var(--text-medium); margin-bottom: 24px;"><strong style="font-size: 20px; color: var(--text-dark);">Also accepted:</strong> CareSource &bull; AmeriHealth Caritas &bull; Medical Mutual &bull; UMR &bull; Molina Healthcare &bull; Ohio Autism Scholarship Program (ASP)</p>
+        <p style="font-size: 18px; color: var(--text-medium); margin-bottom: 24px;"><strong style="font-size: 20px; color: var(--text-dark);">Also accepted:</strong> CareSource &bull; Medical Mutual &bull; OSU Health Plan &bull; AmeriHealth Caritas &bull; Paramount &bull; Humana Healthy Horizons &bull; Ohio Autism Scholarship Program (ASP)</p>
         <a href="<?php echo esc_url(home_url('/insurance/')); ?>" style="font-size: 18px; color: var(--primary-blue); font-weight: 600; text-decoration: underline;">View All Accepted Plans &rarr;</a>
     </div>
 </section>
