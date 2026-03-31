@@ -102,41 +102,73 @@ setInterval(function() { lifeNav(1); }, 5000);
             <p>We're growing across Ohio and New Jersey. Find your next role.</p>
         </div>
 
-        <!-- Ohio Positions -->
-        <h3 style="font-size: 22px; color: var(--primary-blue); margin-bottom: 16px;">Ohio</h3>
         <?php
-        $oh_positions = array(
-            array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$17-$19/hr', 'loc' => 'Multiple OH Locations', 'note' => 'No certification required &mdash; free RBT training provided, raise upon certification', 'links' => array(
-                array('label' => 'Powell', 'url' => 'https://jobs.apploi.com/view/1729206'),
-                array('label' => 'Reynoldsburg', 'url' => 'https://jobs.apploi.com/view/1729217'),
-                array('label' => 'South Euclid', 'url' => 'https://jobs.apploi.com/view/1745563'),
-                array('label' => 'Parma Heights', 'url' => 'https://jobs.apploi.com/view/1745568'),
-                array('label' => 'Grove City', 'url' => 'https://jobs.apploi.com/view/1745571'),
-                array('label' => 'Akron', 'url' => 'https://jobs.apploi.com/view/1745680'),
-            )),
-            array('title' => 'Registered Behavior Technician (RBT)', 'type' => 'Full-Time / Part-Time', 'pay' => '$19-$24/hr', 'loc' => 'Beachwood, OH', 'note' => 'Performance-based raises every 6 months', 'links' => array(
-                array('label' => 'Apply', 'url' => 'https://jobs.apploi.com/view/1729523'),
-            )),
-            array('title' => 'BCBA &mdash; Center-Based', 'type' => 'Full-Time', 'pay' => '$82K-$90K/yr', 'loc' => 'Beachwood, OH', 'note' => '', 'links' => array(
-                array('label' => 'Apply', 'url' => 'https://jobs.apploi.com/view/1718531'),
-            )),
-            array('title' => 'BCBA &mdash; Hybrid / Home-Based', 'type' => 'Full-Time', 'pay' => '$75K-$110K/yr', 'loc' => 'Ohio', 'note' => '$65-$72/hr billable + $25/hr non-billable', 'links' => array(
-                array('label' => 'South Euclid', 'url' => 'https://jobs.apploi.com/view/1732059'),
-                array('label' => 'Grove City', 'url' => 'https://jobs.apploi.com/view/1745574'),
-                array('label' => 'Remote', 'url' => 'https://jobs.apploi.com/view/1741753'),
-            )),
-            array('title' => 'Lead BCBA', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'Columbus, OH', 'note' => '', 'links' => array(
-                array('label' => 'Apply', 'url' => 'https://jobs.apploi.com/view/1736739'),
-            )),
+        /**
+         * Helper: parse "Label|URL, Label|URL" into array of links
+         */
+        function abt_parse_job_links($links_str) {
+            $result = array();
+            if (empty($links_str)) return $result;
+            $pairs = array_map('trim', explode(',', $links_str));
+            foreach ($pairs as $pair) {
+                $parts = array_map('trim', explode('|', $pair, 2));
+                if (count($parts) === 2 && !empty($parts[0]) && !empty($parts[1])) {
+                    $result[] = array('label' => $parts[0], 'url' => $parts[1]);
+                }
+            }
+            return $result;
+        }
+
+        /**
+         * Helper: load positions from admin settings
+         */
+        function abt_get_positions($state, $count, $defaults) {
+            $positions = array();
+            for ($i = 1; $i <= $count; $i++) {
+                $def = isset($defaults[$i]) ? $defaults[$i] : array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => '');
+                $title = get_option('abt_job_' . $state . '_' . $i . '_title', $def['title']);
+                if (empty($title)) continue;
+                $positions[] = array(
+                    'title' => $title,
+                    'type'  => get_option('abt_job_' . $state . '_' . $i . '_type', $def['type']),
+                    'pay'   => get_option('abt_job_' . $state . '_' . $i . '_pay', $def['pay']),
+                    'loc'   => get_option('abt_job_' . $state . '_' . $i . '_loc', $def['loc']),
+                    'note'  => get_option('abt_job_' . $state . '_' . $i . '_note', $def['note']),
+                    'links' => abt_parse_job_links(get_option('abt_job_' . $state . '_' . $i . '_links', $def['links'])),
+                );
+            }
+            return $positions;
+        }
+
+        // Ohio defaults (used if admin hasn't saved yet)
+        $oh_defaults = array(
+            1 => array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$17-$19/hr', 'loc' => 'Multiple OH Locations', 'note' => 'No certification required — free RBT training provided, raise upon certification', 'links' => 'Powell|https://jobs.apploi.com/view/1729206, Reynoldsburg|https://jobs.apploi.com/view/1729217, South Euclid|https://jobs.apploi.com/view/1745563, Parma Heights|https://jobs.apploi.com/view/1745568, Grove City|https://jobs.apploi.com/view/1745571, Akron|https://jobs.apploi.com/view/1745680'),
+            2 => array('title' => 'Registered Behavior Technician (RBT)', 'type' => 'Full-Time / Part-Time', 'pay' => '$19-$24/hr', 'loc' => 'Beachwood, OH', 'note' => 'Performance-based raises every 6 months', 'links' => 'Apply|https://jobs.apploi.com/view/1729523'),
+            3 => array('title' => 'BCBA — Center-Based', 'type' => 'Full-Time', 'pay' => '$82K-$90K/yr', 'loc' => 'Beachwood, OH', 'note' => '', 'links' => 'Apply|https://jobs.apploi.com/view/1718531'),
+            4 => array('title' => 'BCBA — Hybrid / Home-Based', 'type' => 'Full-Time', 'pay' => '$75K-$110K/yr', 'loc' => 'Ohio', 'note' => '$65-$72/hr billable + $25/hr non-billable', 'links' => 'South Euclid|https://jobs.apploi.com/view/1732059, Grove City|https://jobs.apploi.com/view/1745574, Remote|https://jobs.apploi.com/view/1741753'),
+            5 => array('title' => 'Lead BCBA', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'Columbus, OH', 'note' => '', 'links' => 'Apply|https://jobs.apploi.com/view/1736739'),
         );
-        foreach ($oh_positions as $pos): ?>
+
+        // NJ defaults
+        $nj_defaults = array(
+            1 => array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$24-$30/hr', 'loc' => 'Multiple NJ Locations', 'note' => 'No certification required — free RBT training provided', 'links' => 'Fair Lawn|https://jobs.apploi.com/view/1736706, Berkeley Twp|https://jobs.apploi.com/view/1736709, Stafford Twp|https://jobs.apploi.com/view/1736713'),
+            2 => array('title' => 'BCBA — Hybrid', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'New Jersey', 'note' => '', 'links' => 'Plainfield|https://jobs.apploi.com/view/1745575, Trenton|https://jobs.apploi.com/view/1745569'),
+        );
+
+        $oh_positions = abt_get_positions('oh', 8, $oh_defaults);
+        $nj_positions = abt_get_positions('nj', 5, $nj_defaults);
+        ?>
+
+        <!-- Ohio Positions -->
+        <h3 style="font-size: 32px; color: var(--primary-blue); margin-bottom: 20px; font-weight: 800; letter-spacing: -0.01em; border-bottom: 3px solid var(--accent-yellow); padding-bottom: 10px; display: inline-block;">&#127466;&#127480; Ohio</h3>
+        <?php foreach ($oh_positions as $pos): ?>
         <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
                 <div>
-                    <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo $pos['title']; ?></h4>
+                    <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo esc_html($pos['title']); ?></h4>
                     <p style="font-size: 16px; color: var(--text-medium); margin-bottom: 0;"><?php echo esc_html($pos['loc']); ?> &bull; <?php echo esc_html($pos['type']); ?> &bull; <?php echo esc_html($pos['pay']); ?></p>
-                    <?php if ($pos['note']): ?>
-                    <p style="font-size: 14px; color: var(--primary-blue); margin-top: 4px; margin-bottom: 0;"><?php echo $pos['note']; ?></p>
+                    <?php if (!empty($pos['note'])): ?>
+                    <p style="font-size: 14px; color: var(--primary-blue); margin-top: 4px; margin-bottom: 0;"><?php echo esc_html($pos['note']); ?></p>
                     <?php endif; ?>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -149,27 +181,15 @@ setInterval(function() { lifeNav(1); }, 5000);
         <?php endforeach; ?>
 
         <!-- NJ Positions -->
-        <h3 style="font-size: 22px; color: var(--primary-blue); margin-top: 40px; margin-bottom: 16px;">New Jersey</h3>
-        <?php
-        $nj_positions = array(
-            array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$24-$30/hr', 'loc' => 'Multiple NJ Locations', 'note' => 'No certification required &mdash; free RBT training provided', 'links' => array(
-                array('label' => 'Fair Lawn', 'url' => 'https://jobs.apploi.com/view/1736706'),
-                array('label' => 'Berkeley Twp', 'url' => 'https://jobs.apploi.com/view/1736709'),
-                array('label' => 'Stafford Twp', 'url' => 'https://jobs.apploi.com/view/1736713'),
-            )),
-            array('title' => 'BCBA &mdash; Hybrid', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'New Jersey', 'note' => '', 'links' => array(
-                array('label' => 'Plainfield', 'url' => 'https://jobs.apploi.com/view/1745575'),
-                array('label' => 'Trenton', 'url' => 'https://jobs.apploi.com/view/1745569'),
-            )),
-        );
-        foreach ($nj_positions as $pos): ?>
+        <h3 style="font-size: 32px; color: var(--primary-blue); margin-top: 48px; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.01em; border-bottom: 3px solid var(--accent-yellow); padding-bottom: 10px; display: inline-block;">&#127466;&#127480; New Jersey</h3>
+        <?php foreach ($nj_positions as $pos): ?>
         <div style="background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='transparent'">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
                 <div>
-                    <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo $pos['title']; ?></h4>
+                    <h4 style="font-size: 17px; color: var(--text-dark); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700;"><?php echo esc_html($pos['title']); ?></h4>
                     <p style="font-size: 16px; color: var(--text-medium); margin-bottom: 0;"><?php echo esc_html($pos['loc']); ?> &bull; <?php echo esc_html($pos['type']); ?> &bull; <?php echo esc_html($pos['pay']); ?></p>
-                    <?php if ($pos['note']): ?>
-                    <p style="font-size: 14px; color: var(--primary-blue); margin-top: 4px; margin-bottom: 0;"><?php echo $pos['note']; ?></p>
+                    <?php if (!empty($pos['note'])): ?>
+                    <p style="font-size: 14px; color: var(--primary-blue); margin-top: 4px; margin-bottom: 0;"><?php echo esc_html($pos['note']); ?></p>
                     <?php endif; ?>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -182,7 +202,7 @@ setInterval(function() { lifeNav(1); }, 5000);
         <?php endforeach; ?>
 
         <div style="text-align: center; margin-top: 32px;">
-            <a href="https://jobs.apploi.com/profile/advanced-behavioral-therapy" target="_blank" rel="noopener" style="font-size: 18px; color: var(--primary-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px;">View All Open Positions on Apploi &rarr;</a>
+            <a href="<?php echo esc_url(get_option('abt_jobs_apploi_url', 'https://jobs.apploi.com/profile/advanced-behavioral-therapy')); ?>" target="_blank" rel="noopener" style="font-size: 18px; color: var(--primary-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px;">View All Open Positions on Apploi &rarr;</a>
         </div>
     </div>
 </section>

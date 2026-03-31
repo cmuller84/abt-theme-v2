@@ -129,6 +129,18 @@ a {
     align-items: center;
 }
 
+.top-bar-center {
+    display: flex;
+    align-items: center;
+}
+
+.top-bar-bcba {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    color: var(--accent-yellow);
+}
+
 .top-bar-right {
     display: flex;
     gap: 16px;
@@ -303,7 +315,7 @@ a {
    HERO
    ============================================ */
 .hero {
-    padding: 80px 0 60px;
+    padding: 40px 0 0;
     position: relative;
     overflow: hidden;
 }
@@ -358,43 +370,10 @@ a {
     max-width: 115%;
     border-radius: 0;
     box-shadow: none;
-    margin-bottom: -20px;
+    margin-bottom: -40px;
 }
 
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--white);
-    padding: 14px 20px;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    margin-top: 24px;
-}
-
-.hero-badge-icon {
-    width: 46px;
-    height: 46px;
-    background: var(--accent-red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    font-size: 20px;
-}
-
-.hero-badge-text strong {
-    display: block;
-    font-size: 22px;
-    color: var(--primary-blue);
-    font-family: 'DM Sans', sans-serif;
-}
-
-.hero-badge-text span {
-    font-size: 13px;
-    color: var(--text-light);
-}
+/* hero-badge removed — BCBA text now in top bar */
 
 /* ============================================
    INSURANCE BAR
@@ -1119,6 +1098,7 @@ a {
 @media (max-width: 640px) {
     .top-bar-inner { justify-content: center; text-align: center; }
     .top-bar-left { flex-direction: column; gap: 6px; }
+    .top-bar-center { display: none; }
     .hero-content h1 { font-size: 28px; }
     .section-header h2 { font-size: 28px; }
     .services-grid, .locations-grid { grid-template-columns: 1fr; }
@@ -1745,7 +1725,4 @@ section:nth-of-type(3n+3) > div > .section-header h2 {
     text-shadow: 0 1px 2px rgba(255,255,255,0.5) !important;
 }
 
-/* v2.4.4 — BCBA badge now inline under CTA buttons */
-.hero-badge {
-    margin-top: 24px !important;
-}
+/* v2.4.4 — BCBA text moved to top bar, hero section tightened */

@@ -66,6 +66,25 @@ function abt_register_settings() {
         register_setting('abt_settings', 'abt_img_life_' . $i);
     }
 
+    // Job Postings — individual fields per position
+    register_setting('abt_settings', 'abt_jobs_apploi_url', array('default' => 'https://jobs.apploi.com/profile/advanced-behavioral-therapy'));
+    for ($i = 1; $i <= 8; $i++) {
+        register_setting('abt_settings', 'abt_job_oh_' . $i . '_title');
+        register_setting('abt_settings', 'abt_job_oh_' . $i . '_type');
+        register_setting('abt_settings', 'abt_job_oh_' . $i . '_pay');
+        register_setting('abt_settings', 'abt_job_oh_' . $i . '_loc');
+        register_setting('abt_settings', 'abt_job_oh_' . $i . '_note');
+        register_setting('abt_settings', 'abt_job_oh_' . $i . '_links');
+    }
+    for ($i = 1; $i <= 5; $i++) {
+        register_setting('abt_settings', 'abt_job_nj_' . $i . '_title');
+        register_setting('abt_settings', 'abt_job_nj_' . $i . '_type');
+        register_setting('abt_settings', 'abt_job_nj_' . $i . '_pay');
+        register_setting('abt_settings', 'abt_job_nj_' . $i . '_loc');
+        register_setting('abt_settings', 'abt_job_nj_' . $i . '_note');
+        register_setting('abt_settings', 'abt_job_nj_' . $i . '_links');
+    }
+
     // Staff photos
     register_setting('abt_settings', 'abt_img_staff_joseph');
     register_setting('abt_settings', 'abt_img_staff_avigail');
@@ -212,6 +231,78 @@ function abt_settings_html() {
                     </td>
                 </tr>
                 <?php endforeach; ?>
+
+                <tr><th colspan="2"><h2>Job Postings (Careers Page)</h2><p class="description">Manage the open positions shown on the Careers page. Each row = one position card. Add location-specific Apploi links separated by commas (format: <code>Label|URL, Label|URL</code>). Leave Title blank to hide a slot.</p></th></tr>
+                <tr><th>Apploi Profile URL</th><td><input type="url" name="abt_jobs_apploi_url" value="<?php echo esc_attr(get_option('abt_jobs_apploi_url', 'https://jobs.apploi.com/profile/advanced-behavioral-therapy')); ?>" class="large-text"><p class="description">"View All Open Positions" link at the bottom of the careers page.</p></td></tr>
+
+                <tr><th colspan="2" style="padding-top: 20px;"><h3 style="color: #1B4B8A;">Ohio Positions</h3></th></tr>
+                <?php
+                $oh_defaults = array(
+                    1 => array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$17-$19/hr', 'loc' => 'Multiple OH Locations', 'note' => 'No certification required — free RBT training provided, raise upon certification', 'links' => 'Powell|https://jobs.apploi.com/view/1729206, Reynoldsburg|https://jobs.apploi.com/view/1729217, South Euclid|https://jobs.apploi.com/view/1745563, Parma Heights|https://jobs.apploi.com/view/1745568, Grove City|https://jobs.apploi.com/view/1745571, Akron|https://jobs.apploi.com/view/1745680'),
+                    2 => array('title' => 'Registered Behavior Technician (RBT)', 'type' => 'Full-Time / Part-Time', 'pay' => '$19-$24/hr', 'loc' => 'Beachwood, OH', 'note' => 'Performance-based raises every 6 months', 'links' => 'Apply|https://jobs.apploi.com/view/1729523'),
+                    3 => array('title' => 'BCBA — Center-Based', 'type' => 'Full-Time', 'pay' => '$82K-$90K/yr', 'loc' => 'Beachwood, OH', 'note' => '', 'links' => 'Apply|https://jobs.apploi.com/view/1718531'),
+                    4 => array('title' => 'BCBA — Hybrid / Home-Based', 'type' => 'Full-Time', 'pay' => '$75K-$110K/yr', 'loc' => 'Ohio', 'note' => '$65-$72/hr billable + $25/hr non-billable', 'links' => 'South Euclid|https://jobs.apploi.com/view/1732059, Grove City|https://jobs.apploi.com/view/1745574, Remote|https://jobs.apploi.com/view/1741753'),
+                    5 => array('title' => 'Lead BCBA', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'Columbus, OH', 'note' => '', 'links' => 'Apply|https://jobs.apploi.com/view/1736739'),
+                    6 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
+                    7 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
+                    8 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
+                );
+                for ($i = 1; $i <= 8; $i++):
+                    $def = $oh_defaults[$i];
+                    $title = get_option('abt_job_oh_' . $i . '_title', $def['title']);
+                    $type = get_option('abt_job_oh_' . $i . '_type', $def['type']);
+                    $pay = get_option('abt_job_oh_' . $i . '_pay', $def['pay']);
+                    $loc = get_option('abt_job_oh_' . $i . '_loc', $def['loc']);
+                    $note = get_option('abt_job_oh_' . $i . '_note', $def['note']);
+                    $links = get_option('abt_job_oh_' . $i . '_links', $def['links']);
+                ?>
+                <tr style="border-top: 2px solid #ddd; <?php echo $title ? '' : 'opacity: 0.5;'; ?>">
+                    <th>OH Position <?php echo $i; ?></th>
+                    <td>
+                        <p><label>Title: <input type="text" name="abt_job_oh_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text" placeholder="e.g. ABA Therapist"></label></p>
+                        <p style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <label>Type: <input type="text" name="abt_job_oh_<?php echo $i; ?>_type" value="<?php echo esc_attr($type); ?>" style="width:180px;" placeholder="Full-Time / Part-Time"></label>
+                            <label>Pay: <input type="text" name="abt_job_oh_<?php echo $i; ?>_pay" value="<?php echo esc_attr($pay); ?>" style="width:140px;" placeholder="$19-$24/hr"></label>
+                            <label>Location: <input type="text" name="abt_job_oh_<?php echo $i; ?>_loc" value="<?php echo esc_attr($loc); ?>" style="width:200px;" placeholder="Beachwood, OH"></label>
+                        </p>
+                        <p><label>Note: <input type="text" name="abt_job_oh_<?php echo $i; ?>_note" value="<?php echo esc_attr($note); ?>" class="large-text" placeholder="Optional note (e.g. free RBT training provided)"></label></p>
+                        <p><label>Apply Links: <input type="text" name="abt_job_oh_<?php echo $i; ?>_links" value="<?php echo esc_attr($links); ?>" class="large-text" placeholder="Label|URL, Label|URL (e.g. Powell|https://jobs.apploi.com/view/123)"></label></p>
+                    </td>
+                </tr>
+                <?php endfor; ?>
+
+                <tr><th colspan="2" style="padding-top: 20px;"><h3 style="color: #1B4B8A;">New Jersey Positions</h3></th></tr>
+                <?php
+                $nj_defaults = array(
+                    1 => array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$24-$30/hr', 'loc' => 'Multiple NJ Locations', 'note' => 'No certification required — free RBT training provided', 'links' => 'Fair Lawn|https://jobs.apploi.com/view/1736706, Berkeley Twp|https://jobs.apploi.com/view/1736709, Stafford Twp|https://jobs.apploi.com/view/1736713'),
+                    2 => array('title' => 'BCBA — Hybrid', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'New Jersey', 'note' => '', 'links' => 'Plainfield|https://jobs.apploi.com/view/1745575, Trenton|https://jobs.apploi.com/view/1745569'),
+                    3 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
+                    4 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
+                    5 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
+                );
+                for ($i = 1; $i <= 5; $i++):
+                    $def = $nj_defaults[$i];
+                    $title = get_option('abt_job_nj_' . $i . '_title', $def['title']);
+                    $type = get_option('abt_job_nj_' . $i . '_type', $def['type']);
+                    $pay = get_option('abt_job_nj_' . $i . '_pay', $def['pay']);
+                    $loc = get_option('abt_job_nj_' . $i . '_loc', $def['loc']);
+                    $note = get_option('abt_job_nj_' . $i . '_note', $def['note']);
+                    $links = get_option('abt_job_nj_' . $i . '_links', $def['links']);
+                ?>
+                <tr style="border-top: 2px solid #ddd; <?php echo $title ? '' : 'opacity: 0.5;'; ?>">
+                    <th>NJ Position <?php echo $i; ?></th>
+                    <td>
+                        <p><label>Title: <input type="text" name="abt_job_nj_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text" placeholder="e.g. ABA Therapist"></label></p>
+                        <p style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <label>Type: <input type="text" name="abt_job_nj_<?php echo $i; ?>_type" value="<?php echo esc_attr($type); ?>" style="width:180px;" placeholder="Full-Time / Part-Time"></label>
+                            <label>Pay: <input type="text" name="abt_job_nj_<?php echo $i; ?>_pay" value="<?php echo esc_attr($pay); ?>" style="width:140px;" placeholder="$24-$30/hr"></label>
+                            <label>Location: <input type="text" name="abt_job_nj_<?php echo $i; ?>_loc" value="<?php echo esc_attr($loc); ?>" style="width:200px;" placeholder="Toms River, NJ"></label>
+                        </p>
+                        <p><label>Note: <input type="text" name="abt_job_nj_<?php echo $i; ?>_note" value="<?php echo esc_attr($note); ?>" class="large-text" placeholder="Optional note"></label></p>
+                        <p><label>Apply Links: <input type="text" name="abt_job_nj_<?php echo $i; ?>_links" value="<?php echo esc_attr($links); ?>" class="large-text" placeholder="Label|URL, Label|URL"></label></p>
+                    </td>
+                </tr>
+                <?php endfor; ?>
 
                 <tr><th colspan="2"><h2>Leadership Team</h2><p class="description">Edit the leadership grid on the About Us page. Leave Name blank to hide a slot.</p></th></tr>
                 <?php

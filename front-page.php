@@ -19,13 +19,6 @@ $pattern = $img . 'abt-pattern-light.jpg';
                 <a href="<?php echo esc_url(home_url('/contact-us/')); ?>" class="btn-cta">Start ABA Therapy &rarr;</a>
                 <a href="<?php echo esc_url(home_url('/our-services/')); ?>" class="btn-secondary">Learn About ABA</a>
             </div>
-            <div class="hero-badge">
-                <div class="hero-badge-icon">&#10004;</div>
-                <div class="hero-badge-text">
-                    <strong>BCBA Owned</strong>
-                    <span>&amp; Operated</span>
-                </div>
-            </div>
         </div>
         <div class="hero-image">
             <img src="<?php echo esc_url(abt_img('hero', 'hero-balloon-kid-v5.png')); ?>" alt="Child with ABT balloons and rocket pack">
