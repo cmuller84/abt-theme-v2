@@ -348,25 +348,28 @@ a {
 
 .hero-image {
     position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .hero-image img {
-    width: 100%;
-    border-radius: 24px;
-    box-shadow: 0 24px 48px rgba(27, 75, 138, 0.15);
+    width: 115%;
+    max-width: 115%;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: -20px;
 }
 
 .hero-badge {
-    position: absolute;
-    bottom: -20px;
-    left: -20px;
-    background: var(--white);
-    padding: 18px 22px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 12px;
+    background: var(--white);
+    padding: 14px 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-top: 24px;
 }
 
 .hero-badge-icon {
@@ -1678,8 +1681,9 @@ section:nth-of-type(3n+3) > div > .section-header h2 {
     box-shadow: none !important;
     filter: drop-shadow(0 8px 24px rgba(27, 75, 138, 0.25)) drop-shadow(0 4px 12px rgba(0,0,0,0.1)) !important;
     background: transparent !important;
-    max-height: 620px !important;
+    max-height: 720px !important;
     width: auto !important;
+    max-width: 120% !important;
     margin: 0 auto;
     display: block;
 }
@@ -1741,10 +1745,7 @@ section:nth-of-type(3n+3) > div > .section-header h2 {
     text-shadow: 0 1px 2px rgba(255,255,255,0.5) !important;
 }
 
-/* v2.4.4 — Tighten hero section, move BCBA badge closer */
-.hero-section {
-    padding: 40px 0 30px !important;
-}
+/* v2.4.4 — BCBA badge now inline under CTA buttons */
 .hero-badge {
-    margin-top: -20px !important;
+    margin-top: 24px !important;
 }
