@@ -886,6 +886,19 @@ a {
     font-size: 13px;
     color: rgba(255,255,255,0.45);
 }
+.footer-legal-links a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-legal-links a:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+.footer-sep {
+    margin: 0 6px;
+    opacity: 0.4;
+}
 
 /* ============================================
    FAQ PAGE

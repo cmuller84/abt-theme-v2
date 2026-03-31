@@ -82,7 +82,15 @@ function submitNewsletter(e) {
         </div>
         <div class="footer-bottom">
             <span>&copy; <?php echo date('Y'); ?> Advanced Behavioral Therapy. All rights reserved.</span>
-            <span>Privacy Policy | Terms of Service</span>
+            <span class="footer-legal-links">
+                <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>
+                <span class="footer-sep">&bull;</span>
+                <a href="<?php echo esc_url(home_url('/terms-of-service/')); ?>">Terms of Service</a>
+                <span class="footer-sep">&bull;</span>
+                <a href="<?php echo esc_url(home_url('/hipaa-notice/')); ?>">HIPAA Notice</a>
+                <span class="footer-sep">&bull;</span>
+                <a href="<?php echo esc_url(home_url('/accessibility/')); ?>">Accessibility</a>
+            </span>
         </div>
     </div>
 </footer>
