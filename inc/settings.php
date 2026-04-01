@@ -376,19 +376,20 @@ function abt_settings_html() {
 
                 <tr><th colspan="2"><h2>Meet Our Team</h2><p class="description">Edit the team grid on the About Us page. Leave Name blank to hide a slot.</p></th></tr>
                 <?php
+                // ORDER: Directors → Ops Coordinators → Admin Staff
                 $team_defaults = array(
-                    1 => array('name' => 'Samantha Brown', 'title' => 'NJ & Columbus Home Regional Coordinator'),
-                    2 => array('name' => 'Kalyn Craven', 'title' => 'Cleveland Home & ELC Coordinator'),
-                    3 => array('name' => 'Sam Banks', 'title' => 'Center Director, Reynoldsburg & Worthington'),
-                    4 => array('name' => 'Kaylee Simmons', 'title' => 'Recruiter'),
-                    5 => array('name' => 'Adam Ivancic', 'title' => 'Senior Recruiter'),
+                    1 => array('name' => 'Sam Banks', 'title' => 'Reynoldsburg Center Director'),
+                    2 => array('name' => 'Ryley Bushong', 'title' => 'Powell Center Director'),
+                    3 => array('name' => 'Samantha Brown', 'title' => 'NJ & Columbus Home Regional Coordinator'),
+                    4 => array('name' => 'Kasey Leech', 'title' => 'Assistant Clinical Director'),
+                    5 => array('name' => 'Jodi Ussery', 'title' => 'Assistant Clinical Director, NJ'),
                     6 => array('name' => 'Michelle Menuez', 'title' => 'Reynoldsburg Center Operations Coordinator'),
                     7 => array('name' => 'Kathryn Zielinski', 'title' => 'Worthington Center Operations Coordinator'),
-                    8 => array('name' => 'Rachel Levin', 'title' => 'Chief of Staff'),
-                    9 => array('name' => 'Kasey Leech', 'title' => 'Assistant Clinical Director'),
-                    10 => array('name' => 'Phil Gallo', 'title' => 'Regional Centers Manager'),
-                    11 => array('name' => '', 'title' => ''),
-                    12 => array('name' => '', 'title' => ''),
+                    8 => array('name' => 'Phil Gallo', 'title' => 'Regional Centers Manager'),
+                    9 => array('name' => 'Kalyn Craven', 'title' => 'Cleveland Home & ELC Coordinator'),
+                    10 => array('name' => 'Kaylee Simmons', 'title' => 'Recruiter'),
+                    11 => array('name' => 'Adam Ivancic', 'title' => 'Senior Recruiter'),
+                    12 => array('name' => 'Rachel Levin', 'title' => 'Chief of Staff'),
                     13 => array('name' => '', 'title' => ''),
                     14 => array('name' => '', 'title' => ''),
                     15 => array('name' => '', 'title' => ''),

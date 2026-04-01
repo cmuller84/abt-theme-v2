@@ -134,32 +134,36 @@ $pattern = $img . 'abt-pattern-light.jpg';
         </div>
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto;">
             <?php
+            // ORDER: Directors → Ops Coordinators → Admin Staff
             $team_defaults = array(
-                1 => array('name' => 'Samantha Brown', 'title' => 'NJ & Columbus Home Regional Coordinator'),
-                2 => array('name' => 'Kalyn Craven', 'title' => 'Cleveland Home & ELC Coordinator'),
-                3 => array('name' => 'Sam Banks', 'title' => 'Center Director, Reynoldsburg & Worthington'),
-                4 => array('name' => 'Kaylee Simmons', 'title' => 'Recruiter'),
-                5 => array('name' => 'Adam Ivancic', 'title' => 'Senior Recruiter'),
+                // Directors
+                1 => array('name' => 'Sam Banks', 'title' => 'Reynoldsburg Center Director'),
+                2 => array('name' => 'Ryley Bushong', 'title' => 'Powell Center Director'),
+                3 => array('name' => 'Samantha Brown', 'title' => 'NJ & Columbus Home Regional Coordinator'),
+                4 => array('name' => 'Kasey Leech', 'title' => 'Assistant Clinical Director'),
+                5 => array('name' => 'Jodi Ussery', 'title' => 'Assistant Clinical Director, NJ'),
+                // Ops Coordinators
                 6 => array('name' => 'Michelle Menuez', 'title' => 'Reynoldsburg Center Operations Coordinator'),
                 7 => array('name' => 'Kathryn Zielinski', 'title' => 'Worthington Center Operations Coordinator'),
-                8 => array('name' => 'Rachel Levin', 'title' => 'Chief of Staff'),
-                9 => array('name' => 'Kasey Leech', 'title' => 'Assistant Clinical Director'),
-                10 => array('name' => 'Phil Gallo', 'title' => 'Regional Centers Manager'),
-                11 => array('name' => '', 'title' => ''),
-                12 => array('name' => '', 'title' => ''),
+                8 => array('name' => 'Phil Gallo', 'title' => 'Regional Centers Manager'),
+                // Admin Staff
+                9 => array('name' => 'Kalyn Craven', 'title' => 'Cleveland Home & ELC Coordinator'),
+                10 => array('name' => 'Kaylee Simmons', 'title' => 'Recruiter'),
+                11 => array('name' => 'Adam Ivancic', 'title' => 'Senior Recruiter'),
+                12 => array('name' => 'Rachel Levin', 'title' => 'Chief of Staff'),
                 13 => array('name' => '', 'title' => ''),
                 14 => array('name' => '', 'title' => ''),
                 15 => array('name' => '', 'title' => ''),
                 16 => array('name' => '', 'title' => ''),
             );
             $team_photo_defaults = array(
-                1 => 'staff-samantha-brown-v2.jpg', 2 => 'staff-kalyn-craven.jpg',
-                3 => 'staff-sam-banks.jpg', 4 => 'staff-kaylee-simmons.jpg',
-                5 => 'staff-adam-ivancic.jpg', 6 => 'staff-michelle-menuez-v2.jpg',
-                7 => 'staff-kathryn-zielinski.jpg', 8 => '', 9 => '', 10 => '',
-                11 => '', 12 => '', 13 => '', 14 => '', 15 => '', 16 => '',
+                1 => 'staff-sam-banks.jpg', 2 => '', 3 => 'staff-samantha-brown-v2.jpg',
+                4 => '', 5 => 'staff-jodi-ussery.png', 6 => 'staff-michelle-menuez-v2.jpg',
+                7 => 'staff-kathryn-zielinski.jpg', 8 => '', 9 => 'staff-kalyn-craven.jpg',
+                10 => 'staff-kaylee-simmons.jpg', 11 => 'staff-adam-ivancic.jpg', 12 => '',
+                13 => '', 14 => '', 15 => '', 16 => '',
             );
-            $team_crop_defaults = array(1=>'center top',2=>'center top',3=>'center top',4=>'center top',5=>'center top',6=>'center top',7=>'center 70%',8=>'center top',9=>'center top',10=>'center top',11=>'center top',12=>'center top',13=>'center top',14=>'center top',15=>'center top',16=>'center top');
+            $team_crop_defaults = array(1=>'center top',2=>'center top',3=>'center top',4=>'center top',5=>'center 30%',6=>'center top',7=>'center 70%',8=>'center top',9=>'center top',10=>'center top',11=>'center top',12=>'center top',13=>'center top',14=>'center top',15=>'center top',16=>'center top');
             for ($i = 1; $i <= 16; $i++):
                 $def = $team_defaults[$i];
                 $name = get_option('abt_team_' . $i . '_name', $def['name']);
