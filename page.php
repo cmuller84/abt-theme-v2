@@ -28,6 +28,11 @@ $template_map = array(
     'new-jersey'        => 'page-new-jersey.php',
     'nj'                => 'page-new-jersey.php',
     'university-partnerships' => 'page-university-partnerships.php',
+    'privacy-policy'          => 'page-privacy-policy.php',
+    'terms-of-service'        => 'page-terms-of-service.php',
+    'hipaa-notice'            => 'page-hipaa-notice.php',
+    'accessibility'           => 'page-accessibility.php',
+    'non-discrimination'      => 'page-non-discrimination.php',
 );
 
 if (isset($template_map[$slug])) {
