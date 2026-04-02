@@ -92,9 +92,13 @@ $pattern = $img . 'abt-pattern-light.jpg';
                 4 => array('name' => '', 'title' => '', 'cred' => ''),
                 5 => array('name' => '', 'title' => '', 'cred' => ''),
                 6 => array('name' => '', 'title' => '', 'cred' => ''),
+                7 => array('name' => '', 'title' => '', 'cred' => ''),
+                8 => array('name' => '', 'title' => '', 'cred' => ''),
+                9 => array('name' => '', 'title' => '', 'cred' => ''),
+                10 => array('name' => '', 'title' => '', 'cred' => ''),
             );
-            $leader_photo_defaults = array(1 => 'staff-joseph-kemmoun.jpg', 2 => 'staff-avigail-kemmoun.jpg', 3 => '', 4 => '', 5 => '', 6 => '');
-            for ($i = 1; $i <= 6; $i++):
+            $leader_photo_defaults = array(1 => 'staff-joseph-kemmoun.jpg', 2 => 'staff-avigail-kemmoun.jpg', 3 => '', 4 => '', 5 => '', 6 => '', 7 => '', 8 => '', 9 => '', 10 => '');
+            for ($i = 1; $i <= 10; $i++):
                 $def = $leader_defaults[$i];
                 $name = get_option('abt_leader_' . $i . '_name', $def['name']);
                 if (empty($name)) continue;
@@ -155,16 +159,25 @@ $pattern = $img . 'abt-pattern-light.jpg';
                 14 => array('name' => '', 'title' => ''),
                 15 => array('name' => '', 'title' => ''),
                 16 => array('name' => '', 'title' => ''),
+                17 => array('name' => '', 'title' => ''),
+                18 => array('name' => '', 'title' => ''),
+                19 => array('name' => '', 'title' => ''),
+                20 => array('name' => '', 'title' => ''),
+                21 => array('name' => '', 'title' => ''),
+                22 => array('name' => '', 'title' => ''),
+                23 => array('name' => '', 'title' => ''),
+                24 => array('name' => '', 'title' => ''),
             );
             $team_photo_defaults = array(
                 1 => 'staff-sam-banks.jpg', 2 => '', 3 => 'staff-samantha-brown-v2.jpg',
                 4 => '', 5 => 'staff-jodi-ussery.png', 6 => 'staff-michelle-menuez-v2.jpg',
                 7 => 'staff-kathryn-zielinski.jpg', 8 => '', 9 => 'staff-kalyn-craven.jpg',
                 10 => 'staff-kaylee-simmons.jpg', 11 => 'staff-adam-ivancic.jpg', 12 => '',
-                13 => '', 14 => '', 15 => '', 16 => '',
+                13 => '', 14 => '', 15 => '', 16 => '', 17 => '', 18 => '',
+                19 => '', 20 => '', 21 => '', 22 => '', 23 => '', 24 => '',
             );
-            $team_crop_defaults = array(1=>'center top',2=>'center top',3=>'center top',4=>'center top',5=>'center 30%',6=>'center top',7=>'center 70%',8=>'center top',9=>'center top',10=>'center top',11=>'center top',12=>'center top',13=>'center top',14=>'center top',15=>'center top',16=>'center top');
-            for ($i = 1; $i <= 16; $i++):
+            $team_crop_defaults = array(1=>'center top',2=>'center top',3=>'center top',4=>'center top',5=>'center 30%',6=>'center top',7=>'center 70%',8=>'center top',9=>'center top',10=>'center top',11=>'center top',12=>'center top',13=>'center top',14=>'center top',15=>'center top',16=>'center top',17=>'center top',18=>'center top',19=>'center top',20=>'center top',21=>'center top',22=>'center top',23=>'center top',24=>'center top');
+            for ($i = 1; $i <= 24; $i++):
                 $def = $team_defaults[$i];
                 $name = get_option('abt_team_' . $i . '_name', $def['name']);
                 if (empty($name)) continue;

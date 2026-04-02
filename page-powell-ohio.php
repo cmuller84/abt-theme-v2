@@ -125,7 +125,7 @@ $loc = isset($locations[$slug]) ? $locations[$slug] : $locations['beachwood-ohio
             // Build photo URLs: use admin uploads if any exist, otherwise fall back to hardcoded
             $carousel_urls = array();
             if ($loc_admin_key) {
-                for ($pi = 1; $pi <= 8; $pi++) {
+                for ($pi = 1; $pi <= 12; $pi++) {
                     $pid = get_option('abt_img_' . $loc_admin_key . '_photo_' . $pi);
                     if ($pid) {
                         $purl = wp_get_attachment_image_url($pid, 'large');

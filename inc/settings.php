@@ -58,10 +58,10 @@ function abt_register_settings() {
     register_setting('abt_settings', 'abt_img_nj_hero');
     register_setting('abt_settings', 'abt_img_contact_hero');
 
-    // Location carousel photos (8 slots per location)
+    // Location carousel photos (12 slots per location)
     $loc_slugs = array('beachwood', 'powell', 'reynoldsburg', 'nj');
     foreach ($loc_slugs as $ls) {
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             register_setting('abt_settings', 'abt_img_' . $ls . '_photo_' . $i);
         }
     }
@@ -69,14 +69,14 @@ function abt_register_settings() {
     // Canva video URL
     register_setting('abt_settings', 'abt_canva_video_url', array('default' => 'https://www.canva.com/design/DAG-VFwY7wc/fYw-27JBw2d3g9emYxxfzw/watch?embed'));
 
-    // Careers community photos (6 slots for Life at ABT carousel)
-    for ($i = 1; $i <= 6; $i++) {
+    // Careers community photos (12 slots for Life at ABT carousel)
+    for ($i = 1; $i <= 12; $i++) {
         register_setting('abt_settings', 'abt_img_life_' . $i);
     }
 
     // Job Postings — individual fields per position
     register_setting('abt_settings', 'abt_jobs_apploi_url', array('default' => 'https://jobs.apploi.com/profile/advanced-behavioral-therapy'));
-    for ($i = 1; $i <= 8; $i++) {
+    for ($i = 1; $i <= 10; $i++) {
         register_setting('abt_settings', 'abt_job_oh_' . $i . '_title');
         register_setting('abt_settings', 'abt_job_oh_' . $i . '_type');
         register_setting('abt_settings', 'abt_job_oh_' . $i . '_pay');
@@ -84,7 +84,7 @@ function abt_register_settings() {
         register_setting('abt_settings', 'abt_job_oh_' . $i . '_note');
         register_setting('abt_settings', 'abt_job_oh_' . $i . '_links');
     }
-    for ($i = 1; $i <= 5; $i++) {
+    for ($i = 1; $i <= 8; $i++) {
         register_setting('abt_settings', 'abt_job_nj_' . $i . '_title');
         register_setting('abt_settings', 'abt_job_nj_' . $i . '_type');
         register_setting('abt_settings', 'abt_job_nj_' . $i . '_pay');
@@ -105,16 +105,16 @@ function abt_register_settings() {
     register_setting('abt_settings', 'abt_img_staff_michelle');
     register_setting('abt_settings', 'abt_img_staff_kathryn');
 
-    // Leadership names/titles (6 slots)
-    for ($i = 1; $i <= 6; $i++) {
+    // Leadership names/titles (10 slots)
+    for ($i = 1; $i <= 10; $i++) {
         register_setting('abt_settings', 'abt_leader_' . $i . '_name');
         register_setting('abt_settings', 'abt_leader_' . $i . '_title');
         register_setting('abt_settings', 'abt_leader_' . $i . '_cred');
         register_setting('abt_settings', 'abt_img_leader_' . $i);
     }
 
-    // Team names/titles (16 slots)
-    for ($i = 1; $i <= 16; $i++) {
+    // Team names/titles (24 slots)
+    for ($i = 1; $i <= 24; $i++) {
         register_setting('abt_settings', 'abt_team_' . $i . '_name');
         register_setting('abt_settings', 'abt_team_' . $i . '_title');
         register_setting('abt_settings', 'abt_img_team_' . $i);
@@ -156,270 +156,359 @@ add_action('admin_enqueue_scripts', 'abt_admin_scripts');
 function abt_settings_html() {
     if (!current_user_can('manage_options')) return;
     ?>
+    <style>
+    .abt-accordion { border: 1px solid #c3c4c7; border-radius: 4px; margin-bottom: 12px; background: #fff; }
+    .abt-accordion-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; cursor: pointer; background: #f6f7f7; border-bottom: 1px solid #c3c4c7; user-select: none; }
+    .abt-accordion-header:hover { background: #eef0f4; }
+    .abt-accordion-header h2 { margin: 0; font-size: 16px; color: #1B4B8A; }
+    .abt-accordion-header .abt-badge { background: #1B4B8A; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+    .abt-accordion-header .dashicons { transition: transform 0.2s; color: #666; }
+    .abt-accordion.open .abt-accordion-header .dashicons { transform: rotate(180deg); }
+    .abt-accordion-body { display: none; padding: 16px 20px; }
+    .abt-accordion.open .abt-accordion-body { display: block; }
+    .abt-accordion.open .abt-accordion-header { border-bottom: 1px solid #c3c4c7; }
+    .abt-accordion:not(.open) .abt-accordion-header { border-bottom: none; }
+    .abt-img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+    .abt-img-grid .abt-image-picker { background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 12px; text-align: center; }
+    .abt-img-grid .abt-image-picker img { max-width: 160px; max-height: 100px; border-radius: 6px; margin-bottom: 8px; }
+    .abt-img-grid .abt-image-picker .abt-img-label { font-size: 12px; color: #666; margin-bottom: 6px; display: block; }
+    .abt-team-card { background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 16px; display: flex; gap: 16px; align-items: flex-start; margin-bottom: 10px; }
+    .abt-team-card.empty { opacity: 0.5; }
+    .abt-team-card .abt-image-picker img { border-radius: 50%; }
+    .abt-team-card .abt-fields { flex: 1; }
+    .abt-team-card .abt-fields input { width: 100%; margin-bottom: 6px; }
+    .abt-job-card { background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 10px; }
+    .abt-job-card.empty { opacity: 0.5; }
+    .abt-job-card .abt-job-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    </style>
     <div class="wrap">
-        <h1>ABT Site Settings</h1>
-        <p>Edit these settings to update the website without touching code. Click "Choose Image" to pick from your Media Library.</p>
+        <h1 style="margin-bottom: 4px;">ABT Site Settings</h1>
+        <p style="color:#666; margin-top:0;">Click a section to expand it. All changes are saved together with the Save button at the bottom.</p>
         <form method="post" action="options.php">
             <?php settings_fields('abt_settings'); ?>
-            <table class="form-table">
-                <tr><th colspan="2"><h2>Top Bar & Contact</h2></th></tr>
-                <tr><th>Announcement Text</th><td><input type="text" name="abt_announcement" value="<?php echo esc_attr(get_option('abt_announcement')); ?>" class="large-text"></td></tr>
-                <tr><th>Phone Number</th><td><input type="text" name="abt_phone" value="<?php echo esc_attr(get_option('abt_phone')); ?>" class="regular-text"></td></tr>
-                <tr><th>Email Address</th><td><input type="email" name="abt_email" value="<?php echo esc_attr(get_option('abt_email')); ?>" class="regular-text"></td></tr>
 
-                <tr><th colspan="2"><h2>Social Media</h2></th></tr>
-                <tr><th>Facebook URL</th><td><input type="url" name="abt_facebook" value="<?php echo esc_attr(get_option('abt_facebook')); ?>" class="large-text"></td></tr>
-                <tr><th>LinkedIn URL</th><td><input type="url" name="abt_linkedin" value="<?php echo esc_attr(get_option('abt_linkedin')); ?>" class="large-text"></td></tr>
-                <tr><th>Instagram URL</th><td><input type="url" name="abt_instagram" value="<?php echo esc_attr(get_option('abt_instagram')); ?>" class="large-text"></td></tr>
+            <!-- 1. General -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-admin-settings"></span> General Settings</h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <table class="form-table">
+                        <tr><th>Announcement Text</th><td><input type="text" name="abt_announcement" value="<?php echo esc_attr(get_option('abt_announcement')); ?>" class="large-text"></td></tr>
+                        <tr><th>Phone Number</th><td><input type="text" name="abt_phone" value="<?php echo esc_attr(get_option('abt_phone')); ?>" class="regular-text"></td></tr>
+                        <tr><th>Email Address</th><td><input type="email" name="abt_email" value="<?php echo esc_attr(get_option('abt_email')); ?>" class="regular-text"></td></tr>
+                        <tr><th>Facebook URL</th><td><input type="url" name="abt_facebook" value="<?php echo esc_attr(get_option('abt_facebook')); ?>" class="large-text"></td></tr>
+                        <tr><th>LinkedIn URL</th><td><input type="url" name="abt_linkedin" value="<?php echo esc_attr(get_option('abt_linkedin')); ?>" class="large-text"></td></tr>
+                        <tr><th>Instagram URL</th><td><input type="url" name="abt_instagram" value="<?php echo esc_attr(get_option('abt_instagram')); ?>" class="large-text"></td></tr>
+                        <tr><th>Hero Headline (HTML OK)</th><td><textarea name="abt_hero_headline" rows="2" class="large-text"><?php echo esc_textarea(get_option('abt_hero_headline')); ?></textarea></td></tr>
+                        <tr><th>Hero Subtext</th><td><textarea name="abt_hero_subtext" rows="2" class="large-text"><?php echo esc_textarea(get_option('abt_hero_subtext')); ?></textarea></td></tr>
+                        <tr><th>Canva Video URL</th><td><input type="url" name="abt_canva_video_url" value="<?php echo esc_attr(get_option('abt_canva_video_url', 'https://www.canva.com/design/DAG-VFwY7wc/fYw-27JBw2d3g9emYxxfzw/watch?embed')); ?>" class="large-text"></td></tr>
+                        <tr><th>Testimonial 1 Text</th><td><textarea name="abt_testimonial_1_text" rows="2" class="large-text"><?php echo esc_textarea(get_option('abt_testimonial_1_text')); ?></textarea></td></tr>
+                        <tr><th>Testimonial 1 Initials / Name</th><td><input type="text" name="abt_testimonial_1_initials" value="<?php echo esc_attr(get_option('abt_testimonial_1_initials')); ?>" style="width:60px"> / <input type="text" name="abt_testimonial_1_name" value="<?php echo esc_attr(get_option('abt_testimonial_1_name')); ?>" style="width:120px"></td></tr>
+                        <tr><th>Testimonial 2 Text</th><td><textarea name="abt_testimonial_2_text" rows="2" class="large-text"><?php echo esc_textarea(get_option('abt_testimonial_2_text')); ?></textarea></td></tr>
+                        <tr><th>Testimonial 2 Initials / Name</th><td><input type="text" name="abt_testimonial_2_initials" value="<?php echo esc_attr(get_option('abt_testimonial_2_initials')); ?>" style="width:60px"> / <input type="text" name="abt_testimonial_2_name" value="<?php echo esc_attr(get_option('abt_testimonial_2_name')); ?>" style="width:120px"></td></tr>
+                    </table>
+                </div>
+            </div>
 
-                <tr><th colspan="2"><h2>Hero Section</h2></th></tr>
-                <tr><th>Headline (HTML OK)</th><td><textarea name="abt_hero_headline" rows="3" class="large-text"><?php echo esc_textarea(get_option('abt_hero_headline')); ?></textarea></td></tr>
-                <tr><th>Subtext</th><td><textarea name="abt_hero_subtext" rows="3" class="large-text"><?php echo esc_textarea(get_option('abt_hero_subtext')); ?></textarea></td></tr>
-                <tr><th>Canva Video URL</th><td><input type="url" name="abt_canva_video_url" value="<?php echo esc_attr(get_option('abt_canva_video_url', 'https://www.canva.com/design/DAG-VFwY7wc/fYw-27JBw2d3g9emYxxfzw/watch?embed')); ?>" class="large-text"><p class="description">The embed URL for the homepage video. Must end in /watch?embed</p></td></tr>
+            <!-- 2. Integrations -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-admin-plugins"></span> Integrations &amp; Webhooks</h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <table class="form-table">
+                        <tr><th>Contact Form Webhook</th><td><input type="url" name="abt_webhook_url" value="<?php echo esc_attr(get_option('abt_webhook_url')); ?>" class="large-text"><p class="description">SquareCloud n8n endpoint.</p></td></tr>
+                        <tr><th>Newsletter Webhook</th><td><input type="url" name="abt_newsletter_webhook_url" value="<?php echo esc_attr(get_option('abt_newsletter_webhook_url')); ?>" class="large-text"><p class="description">Separate n8n webhook for footer email signup. Leave blank to skip.</p></td></tr>
+                        <tr><th>GTM ID</th><td><input type="text" name="abt_gtm_id" value="<?php echo esc_attr(get_option('abt_gtm_id')); ?>" class="regular-text" placeholder="GTM-XXXXXXX"></td></tr>
+                        <tr><th>ActiveCampaign API URL</th><td><input type="url" name="abt_ac_api_url" value="<?php echo esc_attr(get_option('abt_ac_api_url', 'https://advancedabatherapy.api-us1.com')); ?>" class="large-text"></td></tr>
+                        <tr><th>ActiveCampaign API Key</th><td><input type="text" name="abt_ac_api_key" value="<?php echo esc_attr(get_option('abt_ac_api_key')); ?>" class="large-text" placeholder="Paste API key"></td></tr>
+                    </table>
+                </div>
+            </div>
 
-                <tr><th colspan="2"><h2>Integrations</h2></th></tr>
-                <tr><th>Contact Form Webhook URL</th><td><input type="url" name="abt_webhook_url" value="<?php echo esc_attr(get_option('abt_webhook_url')); ?>" class="large-text"><p class="description">SquareCloud n8n endpoint. Do NOT use the old Pabbly URL.</p></td></tr>
-                <tr><th>Google Tag Manager ID</th><td><input type="text" name="abt_gtm_id" value="<?php echo esc_attr(get_option('abt_gtm_id')); ?>" class="regular-text" placeholder="GTM-XXXXXXX"></td></tr>
-                <tr><th>ActiveCampaign API URL</th><td><input type="url" name="abt_ac_api_url" value="<?php echo esc_attr(get_option('abt_ac_api_url', 'https://advancedabatherapy.api-us1.com')); ?>" class="large-text"><p class="description">Found in ActiveCampaign → Settings → Developer.</p></td></tr>
-                <tr><th>ActiveCampaign API Key</th><td><input type="text" name="abt_ac_api_key" value="<?php echo esc_attr(get_option('abt_ac_api_key')); ?>" class="large-text" placeholder="Paste API key here"><p class="description">Contact and newsletter submissions will sync to ActiveCampaign automatically.</p></td></tr>
-                <tr><th>Newsletter Webhook URL</th><td><input type="url" name="abt_newsletter_webhook_url" value="<?php echo esc_attr(get_option('abt_newsletter_webhook_url')); ?>" class="large-text" placeholder="Separate n8n webhook for newsletter signups"><p class="description">From Ben — separate webhook for the footer email signup form. Leave blank to skip n8n for newsletter (AC still works).</p></td></tr>
+            <!-- 3. Locations -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-location"></span> Location Addresses</h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <table class="form-table">
+                        <tr><th>Beachwood</th><td><input type="text" name="abt_addr_beachwood" value="<?php echo esc_attr(get_option('abt_addr_beachwood')); ?>" class="large-text"></td></tr>
+                        <tr><th>Powell</th><td><input type="text" name="abt_addr_powell" value="<?php echo esc_attr(get_option('abt_addr_powell')); ?>" class="large-text"></td></tr>
+                        <tr><th>Reynoldsburg</th><td><input type="text" name="abt_addr_reynoldsburg" value="<?php echo esc_attr(get_option('abt_addr_reynoldsburg')); ?>" class="large-text"></td></tr>
+                        <tr><th>New Jersey</th><td><input type="text" name="abt_addr_nj" value="<?php echo esc_attr(get_option('abt_addr_nj')); ?>" class="large-text"></td></tr>
+                    </table>
+                </div>
+            </div>
 
-                <tr><th colspan="2"><h2>Testimonials</h2></th></tr>
-                <tr><th>Testimonial 1 Text</th><td><textarea name="abt_testimonial_1_text" rows="3" class="large-text"><?php echo esc_textarea(get_option('abt_testimonial_1_text')); ?></textarea></td></tr>
-                <tr><th>Testimonial 1 Initials / Name</th><td><input type="text" name="abt_testimonial_1_initials" value="<?php echo esc_attr(get_option('abt_testimonial_1_initials')); ?>" style="width:60px"> / <input type="text" name="abt_testimonial_1_name" value="<?php echo esc_attr(get_option('abt_testimonial_1_name')); ?>" style="width:120px"></td></tr>
-                <tr><th>Testimonial 2 Text</th><td><textarea name="abt_testimonial_2_text" rows="3" class="large-text"><?php echo esc_textarea(get_option('abt_testimonial_2_text')); ?></textarea></td></tr>
-                <tr><th>Testimonial 2 Initials / Name</th><td><input type="text" name="abt_testimonial_2_initials" value="<?php echo esc_attr(get_option('abt_testimonial_2_initials')); ?>" style="width:60px"> / <input type="text" name="abt_testimonial_2_name" value="<?php echo esc_attr(get_option('abt_testimonial_2_name')); ?>" style="width:120px"></td></tr>
+            <!-- 4. Site Images -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-format-image"></span> Site Images</h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <p class="description" style="margin-bottom:16px;">Click "Choose Image" to pick from your Media Library. Leave blank to use the default.</p>
+                    <div class="abt-img-grid">
+                    <?php
+                    $image_fields = array(
+                        'hero' => 'Hero Image', 'founder' => 'Founder Photo', 'about' => 'Our Story',
+                        'service_home' => 'Service: Home', 'service_center' => 'Service: Center', 'service_elc' => 'Service: ELC', 'service_school' => 'Service: School',
+                        'beachwood_hero' => 'Beachwood Hero', 'powell_hero' => 'Powell Hero', 'reynoldsburg_hero' => 'Reynoldsburg Hero', 'nj_hero' => 'NJ Hero', 'contact_hero' => 'Contact Sidebar',
+                        'faq_1a' => 'FAQ 1 Left', 'faq_1b' => 'FAQ 1 Right', 'faq_2' => 'FAQ 2 Full', 'faq_3a' => 'FAQ 3 Left', 'faq_3b' => 'FAQ 3 Right',
+                    );
+                    foreach ($image_fields as $key => $label):
+                        $val = get_option('abt_img_' . $key);
+                        $img_url = $val ? wp_get_attachment_image_url($val, 'thumbnail') : '';
+                    ?>
+                    <div class="abt-image-picker" data-field="abt_img_<?php echo esc_attr($key); ?>">
+                        <span class="abt-img-label"><?php echo esc_html($label); ?></span>
+                        <input type="hidden" name="abt_img_<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($val); ?>">
+                        <img src="<?php echo esc_url($img_url); ?>" style="display:<?php echo $img_url ? 'block' : 'none'; ?>">
+                        <button type="button" class="button button-small abt-choose-image">Choose</button>
+                        <button type="button" class="button button-small abt-remove-image" style="display:<?php echo $val ? 'inline-block' : 'none'; ?>">Remove</button>
+                    </div>
+                    <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
 
-                <tr><th colspan="2"><h2>Location Addresses</h2></th></tr>
-                <tr><th>Beachwood</th><td><input type="text" name="abt_addr_beachwood" value="<?php echo esc_attr(get_option('abt_addr_beachwood')); ?>" class="large-text"></td></tr>
-                <tr><th>Powell</th><td><input type="text" name="abt_addr_powell" value="<?php echo esc_attr(get_option('abt_addr_powell')); ?>" class="large-text"></td></tr>
-                <tr><th>Reynoldsburg</th><td><input type="text" name="abt_addr_reynoldsburg" value="<?php echo esc_attr(get_option('abt_addr_reynoldsburg')); ?>" class="large-text"></td></tr>
-                <tr><th>New Jersey</th><td><input type="text" name="abt_addr_nj" value="<?php echo esc_attr(get_option('abt_addr_nj')); ?>" class="large-text"></td></tr>
+            <!-- 5. Life at ABT Photos -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-camera"></span> Life at ABT Photos <span class="abt-badge">12 slots</span></h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <p class="description" style="margin-bottom:16px;">Careers page "Life at ABT" carousel. Leave blank to use defaults.</p>
+                    <div class="abt-img-grid">
+                    <?php for ($i = 1; $i <= 12; $i++):
+                        $val = get_option('abt_img_life_' . $i);
+                        $img_url = $val ? wp_get_attachment_image_url($val, 'thumbnail') : '';
+                    ?>
+                    <div class="abt-image-picker" data-field="abt_img_life_<?php echo $i; ?>">
+                        <span class="abt-img-label">Photo <?php echo $i; ?></span>
+                        <input type="hidden" name="abt_img_life_<?php echo $i; ?>" value="<?php echo esc_attr($val); ?>">
+                        <img src="<?php echo esc_url($img_url); ?>" style="display:<?php echo $img_url ? 'block' : 'none'; ?>">
+                        <button type="button" class="button button-small abt-choose-image">Choose</button>
+                        <button type="button" class="button button-small abt-remove-image" style="display:<?php echo $val ? 'inline-block' : 'none'; ?>">Remove</button>
+                    </div>
+                    <?php endfor; ?>
+                    </div>
+                </div>
+            </div>
 
-                <tr><th colspan="2"><h2>Site Images</h2><p class="description">Click "Choose Image" to pick from your Media Library. Leave blank to use the default theme image.</p></th></tr>
-                <?php
-                $image_fields = array(
-                    'hero'              => 'Homepage — Hero Image',
-                    'founder'           => 'About Us — Founder Letter Photo (Avigail)',
-                    'about'             => 'About Us — Our Story Image',
-                    'service_home'      => 'Services — Home-Based',
-                    'service_center'    => 'Services — Center-Based',
-                    'service_elc'       => 'Services — Early Learning Centers',
-                    'service_school'    => 'Services — School Support',
-                    'beachwood_hero'    => 'Beachwood — Hero/First Carousel Photo',
-                    'powell_hero'       => 'Powell — Hero/First Carousel Photo',
-                    'reynoldsburg_hero' => 'Reynoldsburg — Hero/First Carousel Photo',
-                    'nj_hero'           => 'New Jersey — Hero Photo',
-                    'contact_hero'      => 'Contact Page — Sidebar Image',
-                    'faq_1a'            => 'FAQ — Image Break 1 (Left)',
-                    'faq_1b'            => 'FAQ — Image Break 1 (Right)',
-                    'faq_2'             => 'FAQ — Image Break 2 (Full Width)',
-                    'faq_3a'            => 'FAQ — Image Break 3 (Left)',
-                    'faq_3b'            => 'FAQ — Image Break 3 (Right)',
-                    'life_1'            => 'Careers — Life at ABT Photo 1',
-                    'life_2'            => 'Careers — Life at ABT Photo 2',
-                    'life_3'            => 'Careers — Life at ABT Photo 3',
-                    'life_4'            => 'Careers — Life at ABT Photo 4',
-                    'life_5'            => 'Careers — Life at ABT Photo 5',
-                    'life_6'            => 'Careers — Life at ABT Photo 6',
-                );
-                foreach ($image_fields as $key => $label):
-                    $val = get_option('abt_img_' . $key);
-                    $img_url = $val ? wp_get_attachment_image_url($val, 'thumbnail') : '';
-                ?>
-                <tr>
-                    <th><?php echo esc_html($label); ?></th>
-                    <td>
-                        <div class="abt-image-picker" data-field="abt_img_<?php echo esc_attr($key); ?>">
-                            <input type="hidden" name="abt_img_<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($val); ?>">
-                            <img src="<?php echo esc_url($img_url); ?>" style="max-width:200px;max-height:120px;display:<?php echo $img_url ? 'block' : 'none'; ?>;margin-bottom:8px;border-radius:8px;">
-                            <button type="button" class="button abt-choose-image">Choose Image</button>
-                            <button type="button" class="button abt-remove-image" style="display:<?php echo $val ? 'inline-block' : 'none'; ?>">Remove</button>
-                        </div>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-
-                <tr><th colspan="2"><h2>Location Carousel Photos</h2><p class="description">Upload photos for each location's carousel slideshow. Leave blank to use the default theme images. Landscape (horizontal) photos look best. Photos display in order (1 first).</p></th></tr>
-                <?php
-                $carousel_locations = array(
-                    'beachwood' => 'Beachwood',
-                    'powell'    => 'Powell',
-                    'reynoldsburg' => 'Reynoldsburg',
-                    'nj'        => 'New Jersey',
-                );
-                foreach ($carousel_locations as $loc_key => $loc_name):
-                    echo '<tr><th colspan="2" style="padding-top:16px;"><h3 style="color:#1B4B8A;">' . esc_html($loc_name) . ' Carousel</h3></th></tr>';
-                    for ($ci = 1; $ci <= 8; $ci++):
+            <!-- 6. Location Carousel Photos -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-images-alt2"></span> Location Carousel Photos <span class="abt-badge">12 per location</span></h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <p class="description" style="margin-bottom:16px;">Landscape photos look best (16:10 ratio). Leave blank to use defaults. Photos display in order.</p>
+                    <?php
+                    $carousel_locations = array('beachwood' => 'Beachwood', 'powell' => 'Powell', 'reynoldsburg' => 'Reynoldsburg', 'nj' => 'New Jersey');
+                    foreach ($carousel_locations as $loc_key => $loc_name): ?>
+                    <h3 style="color:#1B4B8A; margin: 20px 0 10px;"><?php echo esc_html($loc_name); ?></h3>
+                    <div class="abt-img-grid">
+                    <?php for ($ci = 1; $ci <= 12; $ci++):
                         $ck = $loc_key . '_photo_' . $ci;
                         $cv = get_option('abt_img_' . $ck);
                         $cu = $cv ? wp_get_attachment_image_url($cv, 'thumbnail') : '';
-                ?>
-                <tr>
-                    <th><?php echo esc_html($loc_name); ?> Photo <?php echo $ci; ?></th>
-                    <td>
-                        <div class="abt-image-picker" data-field="abt_img_<?php echo esc_attr($ck); ?>">
-                            <input type="hidden" name="abt_img_<?php echo esc_attr($ck); ?>" value="<?php echo esc_attr($cv); ?>">
-                            <img src="<?php echo esc_url($cu); ?>" style="max-width:200px;max-height:120px;display:<?php echo $cu ? 'block' : 'none'; ?>;margin-bottom:8px;border-radius:8px;">
-                            <button type="button" class="button abt-choose-image">Choose Image</button>
-                            <button type="button" class="button abt-remove-image" style="display:<?php echo $cv ? 'inline-block' : 'none'; ?>">Remove</button>
+                    ?>
+                    <div class="abt-image-picker" data-field="abt_img_<?php echo esc_attr($ck); ?>">
+                        <span class="abt-img-label"><?php echo $ci; ?></span>
+                        <input type="hidden" name="abt_img_<?php echo esc_attr($ck); ?>" value="<?php echo esc_attr($cv); ?>">
+                        <img src="<?php echo esc_url($cu); ?>" style="display:<?php echo $cu ? 'block' : 'none'; ?>">
+                        <button type="button" class="button button-small abt-choose-image">Choose</button>
+                        <button type="button" class="button button-small abt-remove-image" style="display:<?php echo $cv ? 'inline-block' : 'none'; ?>">Remove</button>
+                    </div>
+                    <?php endfor; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- 7. Job Postings -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-megaphone"></span> Job Postings <span class="abt-badge">OH: 10 &bull; NJ: 8</span></h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <table class="form-table" style="margin-bottom:0;">
+                        <tr><th>Apploi Profile URL</th><td><input type="url" name="abt_jobs_apploi_url" value="<?php echo esc_attr(get_option('abt_jobs_apploi_url', 'https://jobs.apploi.com/profile/advanced-behavioral-therapy')); ?>" class="large-text"></td></tr>
+                    </table>
+                    <h3 style="color:#1B4B8A; margin: 20px 0 10px;">Ohio Positions</h3>
+                    <?php
+                    $oh_defaults = array(
+                        1 => array('title'=>'ABA Therapist / Behavior Technician','type'=>'Full-Time / Part-Time','pay'=>'$17-$19/hr','loc'=>'Multiple OH Locations','note'=>'No certification required — free RBT training provided, raise upon certification','links'=>'Powell|https://jobs.apploi.com/view/1729206, Reynoldsburg|https://jobs.apploi.com/view/1729217, South Euclid|https://jobs.apploi.com/view/1745563, Parma Heights|https://jobs.apploi.com/view/1745568, Grove City|https://jobs.apploi.com/view/1745571, Akron|https://jobs.apploi.com/view/1745680'),
+                        2 => array('title'=>'Registered Behavior Technician (RBT)','type'=>'Full-Time / Part-Time','pay'=>'$19-$24/hr','loc'=>'Beachwood, OH','note'=>'Performance-based raises every 6 months','links'=>'Apply|https://jobs.apploi.com/view/1729523'),
+                        3 => array('title'=>'BCBA — Center-Based','type'=>'Full-Time','pay'=>'$82K-$90K/yr','loc'=>'Beachwood, OH','note'=>'','links'=>'Apply|https://jobs.apploi.com/view/1718531'),
+                        4 => array('title'=>'BCBA — Hybrid / Home-Based','type'=>'Full-Time','pay'=>'$75K-$110K/yr','loc'=>'Ohio','note'=>'$65-$72/hr billable + $25/hr non-billable','links'=>'South Euclid|https://jobs.apploi.com/view/1732059, Grove City|https://jobs.apploi.com/view/1745574, Remote|https://jobs.apploi.com/view/1741753'),
+                        5 => array('title'=>'Lead BCBA','type'=>'Full-Time','pay'=>'Competitive','loc'=>'Columbus, OH','note'=>'','links'=>'Apply|https://jobs.apploi.com/view/1736739'),
+                    );
+                    for ($i = 1; $i <= 10; $i++):
+                        $def = isset($oh_defaults[$i]) ? $oh_defaults[$i] : array('title'=>'','type'=>'','pay'=>'','loc'=>'','note'=>'','links'=>'');
+                        $title = get_option('abt_job_oh_'.$i.'_title', $def['title']);
+                        $type = get_option('abt_job_oh_'.$i.'_type', $def['type']);
+                        $pay = get_option('abt_job_oh_'.$i.'_pay', $def['pay']);
+                        $loc = get_option('abt_job_oh_'.$i.'_loc', $def['loc']);
+                        $note = get_option('abt_job_oh_'.$i.'_note', $def['note']);
+                        $links = get_option('abt_job_oh_'.$i.'_links', $def['links']);
+                    ?>
+                    <div class="abt-job-card <?php echo $title ? '' : 'empty'; ?>">
+                        <strong>OH #<?php echo $i; ?></strong>
+                        <div class="abt-job-row"><input type="text" name="abt_job_oh_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text" placeholder="Job Title"></div>
+                        <div class="abt-job-row">
+                            <input type="text" name="abt_job_oh_<?php echo $i; ?>_type" value="<?php echo esc_attr($type); ?>" style="width:170px;" placeholder="Type">
+                            <input type="text" name="abt_job_oh_<?php echo $i; ?>_pay" value="<?php echo esc_attr($pay); ?>" style="width:130px;" placeholder="Pay">
+                            <input type="text" name="abt_job_oh_<?php echo $i; ?>_loc" value="<?php echo esc_attr($loc); ?>" style="width:190px;" placeholder="Location">
                         </div>
-                    </td>
-                </tr>
-                <?php endfor; endforeach; ?>
+                        <div class="abt-job-row"><input type="text" name="abt_job_oh_<?php echo $i; ?>_note" value="<?php echo esc_attr($note); ?>" class="large-text" placeholder="Note (optional)"></div>
+                        <div class="abt-job-row"><input type="text" name="abt_job_oh_<?php echo $i; ?>_links" value="<?php echo esc_attr($links); ?>" class="large-text" placeholder="Label|URL, Label|URL"></div>
+                    </div>
+                    <?php endfor; ?>
 
-                <tr><th colspan="2"><h2>Job Postings (Careers Page)</h2><p class="description">Manage the open positions shown on the Careers page. Each row = one position card. Add location-specific Apploi links separated by commas (format: <code>Label|URL, Label|URL</code>). Leave Title blank to hide a slot.</p></th></tr>
-                <tr><th>Apploi Profile URL</th><td><input type="url" name="abt_jobs_apploi_url" value="<?php echo esc_attr(get_option('abt_jobs_apploi_url', 'https://jobs.apploi.com/profile/advanced-behavioral-therapy')); ?>" class="large-text"><p class="description">"View All Open Positions" link at the bottom of the careers page.</p></td></tr>
+                    <h3 style="color:#1B4B8A; margin: 20px 0 10px;">New Jersey Positions</h3>
+                    <?php
+                    $nj_defaults = array(
+                        1 => array('title'=>'ABA Therapist / Behavior Technician','type'=>'Full-Time / Part-Time','pay'=>'$24-$30/hr','loc'=>'Multiple NJ Locations','note'=>'No certification required — free RBT training provided','links'=>'Fair Lawn|https://jobs.apploi.com/view/1736706, Berkeley Twp|https://jobs.apploi.com/view/1736709, Stafford Twp|https://jobs.apploi.com/view/1736713'),
+                        2 => array('title'=>'BCBA — Hybrid','type'=>'Full-Time','pay'=>'Competitive','loc'=>'New Jersey','note'=>'','links'=>'Plainfield|https://jobs.apploi.com/view/1745575, Trenton|https://jobs.apploi.com/view/1745569'),
+                    );
+                    for ($i = 1; $i <= 8; $i++):
+                        $def = isset($nj_defaults[$i]) ? $nj_defaults[$i] : array('title'=>'','type'=>'','pay'=>'','loc'=>'','note'=>'','links'=>'');
+                        $title = get_option('abt_job_nj_'.$i.'_title', $def['title']);
+                        $type = get_option('abt_job_nj_'.$i.'_type', $def['type']);
+                        $pay = get_option('abt_job_nj_'.$i.'_pay', $def['pay']);
+                        $loc = get_option('abt_job_nj_'.$i.'_loc', $def['loc']);
+                        $note = get_option('abt_job_nj_'.$i.'_note', $def['note']);
+                        $links = get_option('abt_job_nj_'.$i.'_links', $def['links']);
+                    ?>
+                    <div class="abt-job-card <?php echo $title ? '' : 'empty'; ?>">
+                        <strong>NJ #<?php echo $i; ?></strong>
+                        <div class="abt-job-row"><input type="text" name="abt_job_nj_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text" placeholder="Job Title"></div>
+                        <div class="abt-job-row">
+                            <input type="text" name="abt_job_nj_<?php echo $i; ?>_type" value="<?php echo esc_attr($type); ?>" style="width:170px;" placeholder="Type">
+                            <input type="text" name="abt_job_nj_<?php echo $i; ?>_pay" value="<?php echo esc_attr($pay); ?>" style="width:130px;" placeholder="Pay">
+                            <input type="text" name="abt_job_nj_<?php echo $i; ?>_loc" value="<?php echo esc_attr($loc); ?>" style="width:190px;" placeholder="Location">
+                        </div>
+                        <div class="abt-job-row"><input type="text" name="abt_job_nj_<?php echo $i; ?>_note" value="<?php echo esc_attr($note); ?>" class="large-text" placeholder="Note (optional)"></div>
+                        <div class="abt-job-row"><input type="text" name="abt_job_nj_<?php echo $i; ?>_links" value="<?php echo esc_attr($links); ?>" class="large-text" placeholder="Label|URL, Label|URL"></div>
+                    </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
 
-                <tr><th colspan="2" style="padding-top: 20px;"><h3 style="color: #1B4B8A;">Ohio Positions</h3></th></tr>
-                <?php
-                $oh_defaults = array(
-                    1 => array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$17-$19/hr', 'loc' => 'Multiple OH Locations', 'note' => 'No certification required — free RBT training provided, raise upon certification', 'links' => 'Powell|https://jobs.apploi.com/view/1729206, Reynoldsburg|https://jobs.apploi.com/view/1729217, South Euclid|https://jobs.apploi.com/view/1745563, Parma Heights|https://jobs.apploi.com/view/1745568, Grove City|https://jobs.apploi.com/view/1745571, Akron|https://jobs.apploi.com/view/1745680'),
-                    2 => array('title' => 'Registered Behavior Technician (RBT)', 'type' => 'Full-Time / Part-Time', 'pay' => '$19-$24/hr', 'loc' => 'Beachwood, OH', 'note' => 'Performance-based raises every 6 months', 'links' => 'Apply|https://jobs.apploi.com/view/1729523'),
-                    3 => array('title' => 'BCBA — Center-Based', 'type' => 'Full-Time', 'pay' => '$82K-$90K/yr', 'loc' => 'Beachwood, OH', 'note' => '', 'links' => 'Apply|https://jobs.apploi.com/view/1718531'),
-                    4 => array('title' => 'BCBA — Hybrid / Home-Based', 'type' => 'Full-Time', 'pay' => '$75K-$110K/yr', 'loc' => 'Ohio', 'note' => '$65-$72/hr billable + $25/hr non-billable', 'links' => 'South Euclid|https://jobs.apploi.com/view/1732059, Grove City|https://jobs.apploi.com/view/1745574, Remote|https://jobs.apploi.com/view/1741753'),
-                    5 => array('title' => 'Lead BCBA', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'Columbus, OH', 'note' => '', 'links' => 'Apply|https://jobs.apploi.com/view/1736739'),
-                    6 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
-                    7 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
-                    8 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
-                );
-                for ($i = 1; $i <= 8; $i++):
-                    $def = $oh_defaults[$i];
-                    $title = get_option('abt_job_oh_' . $i . '_title', $def['title']);
-                    $type = get_option('abt_job_oh_' . $i . '_type', $def['type']);
-                    $pay = get_option('abt_job_oh_' . $i . '_pay', $def['pay']);
-                    $loc = get_option('abt_job_oh_' . $i . '_loc', $def['loc']);
-                    $note = get_option('abt_job_oh_' . $i . '_note', $def['note']);
-                    $links = get_option('abt_job_oh_' . $i . '_links', $def['links']);
-                ?>
-                <tr style="border-top: 2px solid #ddd; <?php echo $title ? '' : 'opacity: 0.5;'; ?>">
-                    <th>OH Position <?php echo $i; ?></th>
-                    <td>
-                        <p><label>Title: <input type="text" name="abt_job_oh_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text" placeholder="e.g. ABA Therapist"></label></p>
-                        <p style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <label>Type: <input type="text" name="abt_job_oh_<?php echo $i; ?>_type" value="<?php echo esc_attr($type); ?>" style="width:180px;" placeholder="Full-Time / Part-Time"></label>
-                            <label>Pay: <input type="text" name="abt_job_oh_<?php echo $i; ?>_pay" value="<?php echo esc_attr($pay); ?>" style="width:140px;" placeholder="$19-$24/hr"></label>
-                            <label>Location: <input type="text" name="abt_job_oh_<?php echo $i; ?>_loc" value="<?php echo esc_attr($loc); ?>" style="width:200px;" placeholder="Beachwood, OH"></label>
-                        </p>
-                        <p><label>Note: <input type="text" name="abt_job_oh_<?php echo $i; ?>_note" value="<?php echo esc_attr($note); ?>" class="large-text" placeholder="Optional note (e.g. free RBT training provided)"></label></p>
-                        <p><label>Apply Links: <input type="text" name="abt_job_oh_<?php echo $i; ?>_links" value="<?php echo esc_attr($links); ?>" class="large-text" placeholder="Label|URL, Label|URL (e.g. Powell|https://jobs.apploi.com/view/123)"></label></p>
-                    </td>
-                </tr>
-                <?php endfor; ?>
-
-                <tr><th colspan="2" style="padding-top: 20px;"><h3 style="color: #1B4B8A;">New Jersey Positions</h3></th></tr>
-                <?php
-                $nj_defaults = array(
-                    1 => array('title' => 'ABA Therapist / Behavior Technician', 'type' => 'Full-Time / Part-Time', 'pay' => '$24-$30/hr', 'loc' => 'Multiple NJ Locations', 'note' => 'No certification required — free RBT training provided', 'links' => 'Fair Lawn|https://jobs.apploi.com/view/1736706, Berkeley Twp|https://jobs.apploi.com/view/1736709, Stafford Twp|https://jobs.apploi.com/view/1736713'),
-                    2 => array('title' => 'BCBA — Hybrid', 'type' => 'Full-Time', 'pay' => 'Competitive', 'loc' => 'New Jersey', 'note' => '', 'links' => 'Plainfield|https://jobs.apploi.com/view/1745575, Trenton|https://jobs.apploi.com/view/1745569'),
-                    3 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
-                    4 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
-                    5 => array('title' => '', 'type' => '', 'pay' => '', 'loc' => '', 'note' => '', 'links' => ''),
-                );
-                for ($i = 1; $i <= 5; $i++):
-                    $def = $nj_defaults[$i];
-                    $title = get_option('abt_job_nj_' . $i . '_title', $def['title']);
-                    $type = get_option('abt_job_nj_' . $i . '_type', $def['type']);
-                    $pay = get_option('abt_job_nj_' . $i . '_pay', $def['pay']);
-                    $loc = get_option('abt_job_nj_' . $i . '_loc', $def['loc']);
-                    $note = get_option('abt_job_nj_' . $i . '_note', $def['note']);
-                    $links = get_option('abt_job_nj_' . $i . '_links', $def['links']);
-                ?>
-                <tr style="border-top: 2px solid #ddd; <?php echo $title ? '' : 'opacity: 0.5;'; ?>">
-                    <th>NJ Position <?php echo $i; ?></th>
-                    <td>
-                        <p><label>Title: <input type="text" name="abt_job_nj_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text" placeholder="e.g. ABA Therapist"></label></p>
-                        <p style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <label>Type: <input type="text" name="abt_job_nj_<?php echo $i; ?>_type" value="<?php echo esc_attr($type); ?>" style="width:180px;" placeholder="Full-Time / Part-Time"></label>
-                            <label>Pay: <input type="text" name="abt_job_nj_<?php echo $i; ?>_pay" value="<?php echo esc_attr($pay); ?>" style="width:140px;" placeholder="$24-$30/hr"></label>
-                            <label>Location: <input type="text" name="abt_job_nj_<?php echo $i; ?>_loc" value="<?php echo esc_attr($loc); ?>" style="width:200px;" placeholder="Toms River, NJ"></label>
-                        </p>
-                        <p><label>Note: <input type="text" name="abt_job_nj_<?php echo $i; ?>_note" value="<?php echo esc_attr($note); ?>" class="large-text" placeholder="Optional note"></label></p>
-                        <p><label>Apply Links: <input type="text" name="abt_job_nj_<?php echo $i; ?>_links" value="<?php echo esc_attr($links); ?>" class="large-text" placeholder="Label|URL, Label|URL"></label></p>
-                    </td>
-                </tr>
-                <?php endfor; ?>
-
-                <tr><th colspan="2"><h2>Leadership Team</h2><p class="description">Edit the leadership grid on the About Us page. Leave Name blank to hide a slot.</p></th></tr>
-                <?php
-                $leader_defaults = array(
-                    1 => array('name' => 'Joseph Kemmoun', 'title' => 'President & Founder', 'cred' => ''),
-                    2 => array('name' => 'Avigail Kemmoun', 'title' => 'Chief Clinical Officer & Founder', 'cred' => 'MS, BCBA, COBA'),
-                    3 => array('name' => 'Shaya Brezak', 'title' => 'Vice President of Business Operations', 'cred' => ''),
-                    4 => array('name' => '', 'title' => '', 'cred' => ''),
-                    5 => array('name' => '', 'title' => '', 'cred' => ''),
-                    6 => array('name' => '', 'title' => '', 'cred' => ''),
-                );
-                for ($i = 1; $i <= 6; $i++):
-                    $def = $leader_defaults[$i];
-                    $name = get_option('abt_leader_' . $i . '_name', $def['name']);
-                    $title = get_option('abt_leader_' . $i . '_title', $def['title']);
-                    $cred = get_option('abt_leader_' . $i . '_cred', $def['cred']);
-                    $photo_id = get_option('abt_img_leader_' . $i);
-                    $photo_url = $photo_id ? wp_get_attachment_image_url($photo_id, 'thumbnail') : '';
-                ?>
-                <tr style="border-top: 2px solid #ddd;">
-                    <th>Leader <?php echo $i; ?></th>
-                    <td>
-                        <p><label>Name: <input type="text" name="abt_leader_<?php echo $i; ?>_name" value="<?php echo esc_attr($name); ?>" class="regular-text"></label></p>
-                        <p><label>Title: <input type="text" name="abt_leader_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text"></label></p>
-                        <p><label>Credentials: <input type="text" name="abt_leader_<?php echo $i; ?>_cred" value="<?php echo esc_attr($cred); ?>" class="regular-text" placeholder="e.g. MS, BCBA"></label></p>
-                        <div class="abt-image-picker" data-field="abt_img_leader_<?php echo $i; ?>">
+            <!-- 8. Leadership Team -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-groups"></span> Leadership Team <span class="abt-badge">10 slots</span></h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <p class="description" style="margin-bottom:16px;">Leave Name blank to hide a slot.</p>
+                    <?php
+                    $leader_defaults = array(
+                        1 => array('name'=>'Joseph Kemmoun','title'=>'President & Founder','cred'=>''),
+                        2 => array('name'=>'Avigail Kemmoun','title'=>'Chief Clinical Officer & Founder','cred'=>'MS, BCBA, COBA'),
+                        3 => array('name'=>'Shaya Brezak','title'=>'Vice President of Business Operations','cred'=>''),
+                    );
+                    for ($i = 1; $i <= 10; $i++):
+                        $def = isset($leader_defaults[$i]) ? $leader_defaults[$i] : array('name'=>'','title'=>'','cred'=>'');
+                        $name = get_option('abt_leader_'.$i.'_name', $def['name']);
+                        $title = get_option('abt_leader_'.$i.'_title', $def['title']);
+                        $cred = get_option('abt_leader_'.$i.'_cred', $def['cred']);
+                        $photo_id = get_option('abt_img_leader_'.$i);
+                        $photo_url = $photo_id ? wp_get_attachment_image_url($photo_id, 'thumbnail') : '';
+                    ?>
+                    <div class="abt-team-card <?php echo $name ? '' : 'empty'; ?>">
+                        <div class="abt-image-picker" data-field="abt_img_leader_<?php echo $i; ?>" style="min-width:90px;">
                             <input type="hidden" name="abt_img_leader_<?php echo $i; ?>" value="<?php echo esc_attr($photo_id); ?>">
-                            <img src="<?php echo esc_url($photo_url); ?>" style="max-width:100px;max-height:100px;display:<?php echo $photo_url ? 'block' : 'none'; ?>;margin-bottom:8px;border-radius:50%;">
-                            <button type="button" class="button abt-choose-image">Choose Photo</button>
-                            <button type="button" class="button abt-remove-image" style="display:<?php echo $photo_id ? 'inline-block' : 'none'; ?>">Remove</button>
+                            <img src="<?php echo esc_url($photo_url); ?>" style="width:70px;height:70px;display:<?php echo $photo_url ? 'block' : 'none'; ?>;margin-bottom:6px;border-radius:50%;object-fit:cover;">
+                            <button type="button" class="button button-small abt-choose-image">Photo</button>
+                            <button type="button" class="button button-small abt-remove-image" style="display:<?php echo $photo_id ? 'inline-block' : 'none'; ?>">X</button>
                         </div>
-                    </td>
-                </tr>
-                <?php endfor; ?>
+                        <div class="abt-fields">
+                            <input type="text" name="abt_leader_<?php echo $i; ?>_name" value="<?php echo esc_attr($name); ?>" placeholder="Name">
+                            <input type="text" name="abt_leader_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" placeholder="Title">
+                            <input type="text" name="abt_leader_<?php echo $i; ?>_cred" value="<?php echo esc_attr($cred); ?>" placeholder="Credentials (e.g. MS, BCBA)">
+                        </div>
+                    </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
 
-                <tr><th colspan="2"><h2>Meet Our Team</h2><p class="description">Edit the team grid on the About Us page. Leave Name blank to hide a slot.</p></th></tr>
-                <?php
-                // ORDER: Directors → Ops Coordinators → Admin Staff
-                $team_defaults = array(
-                    1 => array('name' => 'Sam Banks', 'title' => 'Reynoldsburg Center Director'),
-                    2 => array('name' => 'Ryley Bushong', 'title' => 'Powell Center Director'),
-                    3 => array('name' => 'Samantha Brown', 'title' => 'NJ & Columbus Home Regional Coordinator'),
-                    4 => array('name' => 'Kasey Leech', 'title' => 'Assistant Clinical Director'),
-                    5 => array('name' => 'Jodi Ussery', 'title' => 'Assistant Clinical Director, NJ'),
-                    6 => array('name' => 'Michelle Menuez', 'title' => 'Reynoldsburg Center Operations Coordinator'),
-                    7 => array('name' => 'Kathryn Zielinski', 'title' => 'Worthington Center Operations Coordinator'),
-                    8 => array('name' => 'Phil Gallo', 'title' => 'Regional Centers Manager'),
-                    9 => array('name' => 'Kalyn Craven', 'title' => 'Cleveland Home & ELC Coordinator'),
-                    10 => array('name' => 'Kaylee Simmons', 'title' => 'Recruiter'),
-                    11 => array('name' => 'Adam Ivancic', 'title' => 'Senior Recruiter'),
-                    12 => array('name' => 'Rachel Levin', 'title' => 'Chief of Staff'),
-                    13 => array('name' => '', 'title' => ''),
-                    14 => array('name' => '', 'title' => ''),
-                    15 => array('name' => '', 'title' => ''),
-                    16 => array('name' => '', 'title' => ''),
-                );
-                for ($i = 1; $i <= 16; $i++):
-                    $def = $team_defaults[$i];
-                    $name = get_option('abt_team_' . $i . '_name', $def['name']);
-                    $title = get_option('abt_team_' . $i . '_title', $def['title']);
-                    $photo_id = get_option('abt_img_team_' . $i);
-                    $photo_url = $photo_id ? wp_get_attachment_image_url($photo_id, 'thumbnail') : '';
-                ?>
-                <tr style="border-top: 2px solid #ddd;">
-                    <th>Team <?php echo $i; ?></th>
-                    <td>
-                        <p><label>Name: <input type="text" name="abt_team_<?php echo $i; ?>_name" value="<?php echo esc_attr($name); ?>" class="regular-text"></label></p>
-                        <p><label>Title: <input type="text" name="abt_team_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" class="regular-text"></label></p>
-                        <div class="abt-image-picker" data-field="abt_img_team_<?php echo $i; ?>">
+            <!-- 9. Meet Our Team -->
+            <div class="abt-accordion">
+                <div class="abt-accordion-header" onclick="abtToggle(this)">
+                    <h2><span class="dashicons dashicons-buddicons-buddypress-logo"></span> Meet Our Team <span class="abt-badge">24 slots</span></h2>
+                    <span class="dashicons dashicons-arrow-down-alt2"></span>
+                </div>
+                <div class="abt-accordion-body">
+                    <p class="description" style="margin-bottom:16px;">Order: Directors first, then Ops Coordinators, then Admin Staff. Leave Name blank to hide a slot.</p>
+                    <?php
+                    $team_defaults = array(
+                        1=>array('name'=>'Sam Banks','title'=>'Reynoldsburg Center Director'),
+                        2=>array('name'=>'Ryley Bushong','title'=>'Powell Center Director'),
+                        3=>array('name'=>'Samantha Brown','title'=>'NJ & Columbus Home Regional Coordinator'),
+                        4=>array('name'=>'Kasey Leech','title'=>'Assistant Clinical Director'),
+                        5=>array('name'=>'Jodi Ussery','title'=>'Assistant Clinical Director, NJ'),
+                        6=>array('name'=>'Michelle Menuez','title'=>'Reynoldsburg Center Operations Coordinator'),
+                        7=>array('name'=>'Kathryn Zielinski','title'=>'Worthington Center Operations Coordinator'),
+                        8=>array('name'=>'Phil Gallo','title'=>'Regional Centers Manager'),
+                        9=>array('name'=>'Kalyn Craven','title'=>'Cleveland Home & ELC Coordinator'),
+                        10=>array('name'=>'Kaylee Simmons','title'=>'Recruiter'),
+                        11=>array('name'=>'Adam Ivancic','title'=>'Senior Recruiter'),
+                        12=>array('name'=>'Rachel Levin','title'=>'Chief of Staff'),
+                    );
+                    for ($i = 1; $i <= 24; $i++):
+                        $def = isset($team_defaults[$i]) ? $team_defaults[$i] : array('name'=>'','title'=>'');
+                        $name = get_option('abt_team_'.$i.'_name', $def['name']);
+                        $title = get_option('abt_team_'.$i.'_title', $def['title']);
+                        $photo_id = get_option('abt_img_team_'.$i);
+                        $photo_url = $photo_id ? wp_get_attachment_image_url($photo_id, 'thumbnail') : '';
+                    ?>
+                    <div class="abt-team-card <?php echo $name ? '' : 'empty'; ?>">
+                        <div class="abt-image-picker" data-field="abt_img_team_<?php echo $i; ?>" style="min-width:90px;">
                             <input type="hidden" name="abt_img_team_<?php echo $i; ?>" value="<?php echo esc_attr($photo_id); ?>">
-                            <img src="<?php echo esc_url($photo_url); ?>" style="max-width:100px;max-height:100px;display:<?php echo $photo_url ? 'block' : 'none'; ?>;margin-bottom:8px;border-radius:50%;">
-                            <button type="button" class="button abt-choose-image">Choose Photo</button>
-                            <button type="button" class="button abt-remove-image" style="display:<?php echo $photo_id ? 'inline-block' : 'none'; ?>">Remove</button>
+                            <img src="<?php echo esc_url($photo_url); ?>" style="width:70px;height:70px;display:<?php echo $photo_url ? 'block' : 'none'; ?>;margin-bottom:6px;border-radius:50%;object-fit:cover;">
+                            <button type="button" class="button button-small abt-choose-image">Photo</button>
+                            <button type="button" class="button button-small abt-remove-image" style="display:<?php echo $photo_id ? 'inline-block' : 'none'; ?>">X</button>
                         </div>
-                    </td>
-                </tr>
-                <?php endfor; ?>
+                        <div class="abt-fields">
+                            <input type="text" name="abt_team_<?php echo $i; ?>_name" value="<?php echo esc_attr($name); ?>" placeholder="Name">
+                            <input type="text" name="abt_team_<?php echo $i; ?>_title" value="<?php echo esc_attr($title); ?>" placeholder="Title">
+                        </div>
+                    </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
 
-            </table>
-            <?php submit_button(); ?>
+            <?php submit_button('Save All Settings'); ?>
         </form>
     </div>
+    <script>
+    function abtToggle(header) {
+        var acc = header.parentElement;
+        acc.classList.toggle('open');
+        // Save state to localStorage
+        var states = JSON.parse(localStorage.getItem('abt_accordion_states') || '{}');
+        var idx = Array.from(document.querySelectorAll('.abt-accordion')).indexOf(acc);
+        states[idx] = acc.classList.contains('open');
+        localStorage.setItem('abt_accordion_states', JSON.stringify(states));
+    }
+    // Restore accordion states on load
+    (function() {
+        var states = JSON.parse(localStorage.getItem('abt_accordion_states') || '{}');
+        document.querySelectorAll('.abt-accordion').forEach(function(acc, idx) {
+            if (states[idx]) acc.classList.add('open');
+        });
+    })();
+    </script>
     <?php
 }
