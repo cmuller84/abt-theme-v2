@@ -69,7 +69,7 @@ $pattern = $img . 'abt-pattern-light.jpg';
 </section>
 <script>
 var lifePage = 0;
-var lifePerPage = 4;
+var lifePerPage = window.innerWidth <= 640 ? 2 : 4;
 var lifeSlides = document.querySelectorAll('.life-slide');
 var lifeTotalPages = Math.ceil(lifeSlides.length / lifePerPage);
 function lifeNav(dir) {
@@ -79,6 +79,15 @@ function lifeNav(dir) {
     });
     document.getElementById('lifeCounter').textContent = (lifePage + 1) + ' / ' + lifeTotalPages;
 }
+window.addEventListener('resize', function() {
+    var newPerPage = window.innerWidth <= 640 ? 2 : 4;
+    if (newPerPage !== lifePerPage) {
+        lifePerPage = newPerPage;
+        lifePage = 0;
+        lifeTotalPages = Math.ceil(lifeSlides.length / lifePerPage);
+        lifeNav(0);
+    }
+});
 // Auto-advance every 5 seconds
 setInterval(function() { lifeNav(1); }, 5000);
 </script>

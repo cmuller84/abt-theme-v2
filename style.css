@@ -1753,4 +1753,55 @@ section:nth-of-type(3n+3) > div > .section-header h2 {
     text-shadow: 0 1px 2px rgba(255,255,255,0.5) !important;
 }
 
+/* v2.5.0 — Mobile responsive fix for inline grid layouts
+   All template files use inline style="grid-template-columns: ..." which
+   media queries cannot override without !important.  These attribute-selector
+   rules catch every inline grid and collapse them to a single column on mobile.
+   ============================================ */
+
+/* Tablet: 3- and 4-column inline grids → 2 columns */
+@media (max-width: 1024px) {
+    [style*="grid-template-columns: repeat(3"],
+    [style*="grid-template-columns: repeat(4"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    [style*="grid-template-columns: 1fr 2fr"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Mobile: all multi-column inline grids → single column */
+@media (max-width: 640px) {
+    [style*="grid-template-columns: 1fr 1fr"],
+    [style*="grid-template-columns: 1fr 2fr"],
+    [style*="grid-template-columns: repeat(2"],
+    [style*="grid-template-columns: repeat(3"],
+    [style*="grid-template-columns: repeat(4"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Reduce large gaps on mobile */
+    [style*="gap: 60px"] { gap: 32px !important; }
+    [style*="gap: 48px"] { gap: 24px !important; }
+
+    /* Careers photo carousel: 2 columns on mobile instead of 4 */
+    #lifeCarousel {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Carousel nav buttons: keep inside container */
+    #lifeCarousel + button,
+    #lifeCarousel ~ button {
+        position: absolute !important;
+    }
+    #lifeCarousel + button { left: 4px !important; }
+    #lifeCarousel ~ button:last-of-type { right: 4px !important; }
+}
+
+/* Lightbox: use 100% instead of 100vw to avoid scrollbar-width overflow */
+#abt-lightbox {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 /* v2.4.4 — BCBA text moved to top bar, hero section tightened */
